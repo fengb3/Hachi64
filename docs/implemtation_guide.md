@@ -58,7 +58,9 @@ HACHI_ALPHABET="哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖�
 
 ```
 
-### 类设计
+### 类设计 (可选)
+
+如果使用面向对象编程的语言，可使用一个 `Hachi64` 类，包含静态方法 `encode` 和 `decode`：
 
 ```
 CLASS Hachi64:
@@ -72,11 +74,13 @@ CLASS Hachi64:
 hachi64 = new Hachi64()
 ```
 
+如果不使用面向对象编程的语言，可以直接实现两个独立的函数 `encode(data, padding)` 和 `decode(encoded_str, padding)`。
+
 ### `encode` 伪代码
 
 ```
 // 支持多种调用方式:
-// 1. hachi64.encode(data)           - 推荐的实例方法
+// 1. hachi64.encode(data)           - 实例方法
 // 2. Hachi64.encode(data)           - 类静态方法
 
 STATIC_METHOD Hachi64.encode(data, padding = TRUE):
@@ -173,6 +177,26 @@ STATIC_METHOD Hachi64.decode(encoded_str, padding = TRUE):
     
     RETURN bytes(result)
 ```
+
+
+### 调用风格 伪代码
+
+如果使用面向对象编程语言，可以通过实例方法或类静态方法调用：
+```
+// 实例方法调用
+hachi64 = new Hachi64()
+encoded = hachi64.encode(data)
+decoded = hachi64.decode(encoded)
+```
+
+```
+// 类静态方法调用
+encoded = Hachi64.encode(data)
+decoded = Hachi64.decode(encoded)
+```
+
+确保调用方式为 `Hachi64.encode` 和 `Hachi64.decode` 这种形式。可以是 `实例名称.方法名` 或者 `类名称.静态方法名`，或直接 `包名称.函数名` 的调用形式。
+
 
 ## 编码示例
 
