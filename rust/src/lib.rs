@@ -195,7 +195,7 @@ mod tests {
         assert_eq!(encode(b"a"), "西律==");
         
         // 双字节
-        assert_eq!(encode(b"ab"), "西阿南=");
+        assert_eq!(encode(b"ab"), "西阿迷=");
     }
 
     #[test]

@@ -12,65 +12,18 @@
 
 目标是参考项目根目录 `README.md` 中定义的伪代码，为每种主流编程语言提供独立、原生的实现。这确保了每个库都能最好地融入其生态系统，并且没有外部依赖。
 
--   [x] **Rust 实现:**
-    -   [x] 在 `rust/` 目录中实现核心逻辑。
-    -   [ ] 添加完整的文档注释。
-    -   [ ] 发布到 Crates.io。
-
--   [ ] **Python 实现:**
-    -   [ ] 在 `python/` 目录中创建原生 Python 实现。
-    -   [ ] 编写单元测试。
-    -   [ ] 打包并发布到 PyPI。
-
--   [ ] **JavaScript/TypeScript 实现:**
-    -   [ ] 在 `js/` 目录中创建实现，兼容 Node.js 和浏览器。
-    -   [ ] 编写单元测试 (例如使用 Jest)。
-    -   [ ] 发布到 npm。
-
--   [ ] **Go 实现:**
-    -   [ ] 在 `go/` 目录中创建原生 Go 实现。
-    -   [ ] 编写单元测试。
-    -   [ ] 在 pkg.go.dev 上发布模块。
-
--   [ ] **Java 实现:**
-    -   [ ] 在 `java/` 目录中创建原生 Java 实现。
-    -   [ ] 编写单元测试 (例如使用 JUnit)。
-    -   [ ] 发布到 Maven Central。
-
--   [ ] **C# (.NET) 实现:**
-    -   [ ] 在 `csharp/` 目录中创建原生 C# 实现。
-    -   [ ] 编写单元测试 (例如使用 xUnit 或 NUnit)。
-    -   [ ] 发布到 NuGet。
-
--   [ ] **Swift 实现:**
-    -   [ ] 在 `swift/` 目录中创建原生 Swift 实现。
-    -   [ ] 编写单元测试 (例如使用 XCTest)。
-    -   [ ] 发布为 Swift Package。
-
--   [ ] **C++ 实现:**
-    -   [ ] 在 `cpp/` 目录中创建头文件-only或编译型 C++ 库。
-    -   [ ] 编写单元测试 (例如使用 Google Test)。
-    -   [ ] 提供 CMake 构建支持。
-
--   [ ] **PHP 实现:**
-    -   [ ] 在 `php/` 目录中创建原生 PHP 实现。
-    -   [ ] 编写单元测试 (例如使用 PHPUnit)。
-    -   [ ] 发布到 Packagist。
-
--   [ ] **Ruby 实现:**
-    -   [ ] 在 `ruby/` 目录中创建原生 Ruby 实现。
-    -   [ ] 编写单元测试 (例如使用 RSpec)。
-    -   [ ] 将 gem 发布到 RubyGems。
-
--   [ ] **Kotlin 实现:**
-    -   [ ] 在 `kotlin/` 目录中创建原生 Kotlin 实现 (可用于 JVM, JS, Native)。
-    -   [ ] 编写单元测试。
-    -   [ ] 发布到 Maven Central 或其他仓库。
-
--   [ ] **Dart 实现:**
-    -   [ ] 在 `dart/` 目录中创建原生 Dart 实现 (用于 Flutter/Web)。
-    -   [ ] 编写单元测试。
-    -   [ ] 发布到 pub.dev。
+-   [x] **Rust 实现:** [#1](https://github.com/fengb3/Hachi64/issues/1)
+-   [ ] **Python 实现:** [#2](https://github.com/fengb3/Hachi64/issues/2)
+-   [ ] **JavaScript/TypeScript 实现:** [#3](https://github.com/fengb3/Hachi64/issues/3)
+-   [ ] **Go 实现:** [#4](https://github.com/fengb3/Hachi64/issues/4)
+-   [ ] **Java 实现:** [#5](https://github.com/fengb3/Hachi64/issues/5)
+-   [ ] **C# (.NET) 实现:** [#6](https://github.com/fengb3/Hachi64/issues/6)
+-   [ ] **Swift 实现:** [#7](https://github.com/fengb3/Hachi64/issues/7)
+-   [ ] **C++ 实现:** [#8](https://github.com/fengb3/Hachi64/issues/8)
+-   [ ] **PHP 实现:** [#9](https://github.com/fengb3/Hachi64/issues/9)
+-   [ ] **Ruby 实现:** [#10](https://github.com/fengb3/Hachi64/issues/10)
+-   [ ] **Kotlin 实现:** [#11](https://github.com/fengb3/Hachi64/issues/11)
+-   [ ] **Dart 实现:** [#12](https://github.com/fengb3/Hachi64/issues/12)
 
 ### 第三阶段：CI/CD 与社区
 
