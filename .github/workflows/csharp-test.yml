@@ -16,4 +16,5 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Run C# tests
+        working-directory: ./csharp
         run: dotnet test

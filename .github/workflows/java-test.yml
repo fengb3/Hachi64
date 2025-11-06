@@ -17,4 +17,5 @@ jobs:
           distribution: 'temurin'
 
       - name: Run Java tests (with Maven)
+        working-directory: ./java
         run: mvn -B test

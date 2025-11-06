@@ -16,4 +16,5 @@ jobs:
           go-version: '1.x'
 
       - name: Run Go tests
+        working-directory: ./go
         run: go test -v ./...
