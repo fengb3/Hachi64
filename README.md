@@ -25,6 +25,7 @@
 - [python](./python/README.md)
 - [rust](./rust/README.md)
 - [csharp](./csharp/README.md)
+- [java](./java/README.md)
 - [go](./go/README.md)
 - [javascript/typescript](./js/README.md)
 
