@@ -135,6 +135,26 @@ The 64-character Chinese alphabet used for encoding:
 
 A default instance of the Hachi64 class for convenience.
 
+## Examples
+
+### Node.js Example
+
+Run the Node.js example to see various usage patterns:
+
+```bash
+node example-node.js
+```
+
+### Browser Example
+
+Open `example-browser.html` in a web browser to try encoding and decoding interactively. You'll need to build the project first:
+
+```bash
+npm run build
+```
+
+Then open the file in a browser (using a local server if needed to avoid CORS issues with ES modules).
+
 ## Development
 
 ### Setup
