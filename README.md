@@ -26,6 +26,7 @@
 - [rust](./rust/README.md)
 - [csharp](./csharp/README.md)
 - [go](./go/README.md)
+- [javascript/typescript](./js/README.md)
 
 ## 字符集分组
 

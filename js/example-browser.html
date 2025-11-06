@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hachi64 Browser Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 80px;
+            font-family: monospace;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hachi64 Browser Example</h1>
+    <p>This example demonstrates Hachi64 encoding/decoding in the browser.</p>
+
+    <div class="container">
+        <h2>Encode</h2>
+        <label for="inputText">Input Text:</label>
+        <input type="text" id="inputText" placeholder="Enter text to encode" value="Hello, World!">
+        <button onclick="encodeText()">Encode</button>
+        <div id="encodeResult" class="result"></div>
+    </div>
+
+    <div class="container">
+        <h2>Decode</h2>
+        <label for="encodedText">Encoded Text:</label>
+        <textarea id="encodedText" placeholder="Enter Hachi64 encoded text">豆米啊拢嘎米多拢迷集伽漫咖苦播库迷律==</textarea>
+        <button onclick="decodeText()">Decode</button>
+        <div id="decodeResult" class="result"></div>
+    </div>
+
+    <script type="module">
+        // Import from the built module
+        import { encode, decode, HACHI_ALPHABET } from './dist/index.js';
+
+        // Make functions available globally for the buttons
+        window.encodeText = function() {
+            const input = document.getElementById('inputText').value;
+            const data = new TextEncoder().encode(input);
+            const encoded = encode(data);
+            document.getElementById('encodeResult').textContent = 'Encoded: ' + encoded;
+        };
+
+        window.decodeText = function() {
+            const input = document.getElementById('encodedText').value;
+            try {
+                const decoded = decode(input);
+                const text = new TextDecoder().decode(decoded);
+                document.getElementById('decodeResult').textContent = 'Decoded: ' + text;
+            } catch (error) {
+                document.getElementById('decodeResult').textContent = 'Error: ' + error.message;
+            }
+        };
+
+        // Display alphabet info on load
+        console.log('Hachi64 Alphabet:', HACHI_ALPHABET);
+        console.log('Alphabet length:', HACHI_ALPHABET.length);
+    </script>
+</body>
+</html>
