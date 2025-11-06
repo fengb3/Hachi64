@@ -20,6 +20,10 @@ jobs:
         run: |
           pip install -e .[test]
 
+      - name: Install pytest
+        working-directory: ./python
+        run: python -m pip install pytest
+
       - name: Run Python tests
         working-directory: ./python
         run: |
