@@ -126,7 +126,7 @@ java/
 ## 相关链接
 
 - [项目主页](../../README.md)
-- [实现指南](../../docs/implemtation_guide.md)
+- [实现指南](../../docs/implementation_guide.md)
 - [Python 实现](../python/README.md)
 - [C# 实现](../csharp/README.md)
 - [Rust 实现](../rust/README.md)
