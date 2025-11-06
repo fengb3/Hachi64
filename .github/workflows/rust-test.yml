@@ -1,0 +1,21 @@
+name: Reusable Rust Test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: stable
+
+      - name: Run Rust tests
+        working-directory: ./rust
+        run: |
+          cargo test
