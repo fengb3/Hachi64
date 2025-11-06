@@ -166,7 +166,7 @@ class Hachi64Test {
 
     @Test
     fun testRoundtripWithLongText() {
-        val testString = "The quick brown fox jumps over the lazy dog. 这是一段中文文本测试。1234567890!@#\$%^&*()"
+        val testString = "The quick brown fox jumps over the lazy dog. 这是一段中文文本测试。1234567890!@#$%^&*()"
         val testData = testString.encodeToByteArray()
         val encoded = Hachi64.encode(testData)
         val decoded = Hachi64.decode(encoded)
