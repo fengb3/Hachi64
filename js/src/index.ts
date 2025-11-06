@@ -10,6 +10,24 @@
 export const HACHI_ALPHABET = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济";
 
 /**
+ * Cached reverse mapping for efficient decoding
+ */
+let cachedReverseMap: Map<string, number> | null = null;
+
+/**
+ * Get or create the reverse mapping
+ */
+function getReverseMap(): Map<string, number> {
+  if (!cachedReverseMap) {
+    cachedReverseMap = new Map();
+    for (let i = 0; i < HACHI_ALPHABET.length; i++) {
+      cachedReverseMap.set(HACHI_ALPHABET[i], i);
+    }
+  }
+  return cachedReverseMap;
+}
+
+/**
  * Hachi64 encoder/decoder class
  */
 export class Hachi64 {
@@ -18,12 +36,7 @@ export class Hachi64 {
 
   constructor() {
     this.alphabet = HACHI_ALPHABET;
-    this.reverseMap = new Map();
-    
-    // Build reverse mapping for decoding
-    for (let i = 0; i < this.alphabet.length; i++) {
-      this.reverseMap.set(this.alphabet[i], i);
-    }
+    this.reverseMap = getReverseMap();
   }
 
   /**
@@ -88,13 +101,7 @@ export class Hachi64 {
    * @throws Error if the input contains invalid characters
    */
   static decode(encodedStr: string, padding: boolean = true): Uint8Array {
-    const alphabet = HACHI_ALPHABET;
-    const reverseMap = new Map<string, number>();
-    
-    // Build reverse mapping
-    for (let i = 0; i < alphabet.length; i++) {
-      reverseMap.set(alphabet[i], i);
-    }
+    const reverseMap = getReverseMap();
 
     // Handle empty string
     if (!encodedStr) {

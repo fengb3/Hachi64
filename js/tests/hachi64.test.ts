@@ -139,7 +139,13 @@ describe('Hachi64', () => {
 
   describe('invalid input', () => {
     it('should throw error on invalid characters', () => {
-      expect(() => hachi64.decode('包含无效字符X的字符串')).toThrow('Invalid character in input');
+      // String contains invalid character 'X' not in the Hachi64 alphabet
+      expect(() => hachi64.decode('哈哈哈X')).toThrow('Invalid character in input');
+    });
+
+    it('should throw error on ASCII characters', () => {
+      // ASCII characters are not in the Hachi64 alphabet
+      expect(() => hachi64.decode('ABC123')).toThrow('Invalid character in input');
     });
 
     it('should handle empty string decode', () => {
