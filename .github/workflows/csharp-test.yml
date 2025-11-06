@@ -14,6 +14,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
+    
+      - name: Build with MSBuild
+        run: msbuild Hachi64.sln
+        working-directory: ./csharp   
 
       - name: Run C# tests
         working-directory: ./csharp
