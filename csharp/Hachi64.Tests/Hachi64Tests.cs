@@ -61,7 +61,7 @@ namespace Hachi64.Tests
         }
 
         [Fact]
-        public void TestNoPaddingEncodeDecod()
+        public void TestNoPaddingEncodeDecode()
         {
             var testCases = new[] { "a", "ab", "abc", "Hello" };
 
