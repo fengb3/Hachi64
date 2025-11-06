@@ -1,202 +1,239 @@
 //! # Hachi64
 //!
-//! A library for performing Base64 encoding and decoding using a custom,
-//! user-defined 64-character alphabet.
+//! 哈吉米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码。
+//!
+//! 本库提供了使用自定义哈吉米64字符集来创建哈吉米64风格编码的工具。
+//! 哈吉米64使用64个中文字符，这些字符按发音相似性分组，使编码后的字符串看起来更加和谐统一。
 
 use std::collections::HashMap;
+use std::sync::OnceLock;
 
-/// A custom Base64 encoder/decoder.
-#[derive(Debug, Clone)]
-pub struct Hachi64 {
-    alphabet: [u8; 64],
-    reverse_map: HashMap<u8, u8>,
-    padding: bool,
+/// 哈吉米64字符集：64个中文字符，按同音字分组
+pub const HACHI_ALPHABET: &str = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济";
+
+/// 用于解码的反向映射表（懒加载单例）
+static REVERSE_MAP: OnceLock<HashMap<char, u8>> = OnceLock::new();
+/// 用于编码的字符集向量（懒加载单例）
+static ALPHABET_VEC: OnceLock<Vec<char>> = OnceLock::new();
+
+/// 获取字符集向量的单例
+fn get_alphabet() -> &'static Vec<char> {
+    ALPHABET_VEC.get_or_init(|| HACHI_ALPHABET.chars().collect())
 }
 
-/// Represents errors that can occur during encoding or decoding.
+/// 获取反向映射表的单例
+fn get_reverse_map() -> &'static HashMap<char, u8> {
+    REVERSE_MAP.get_or_init(|| {
+        let mut map = HashMap::with_capacity(64);
+        for (i, ch) in HACHI_ALPHABET.chars().enumerate() {
+            map.insert(ch, i as u8);
+        }
+        map
+    })
+}
+
+/// 哈吉米64编解码过程中可能发生的错误
 #[derive(Debug, PartialEq, Eq)]
 pub enum HachiError {
-    /// The provided alphabet is not 64 characters long.
-    InvalidAlphabetLength,
-    /// The provided alphabet contains duplicate characters.
-    InvalidAlphabetChars,
-    /// The input string for decoding is invalid (e.g., contains characters not in the alphabet).
+    /// 解码输入字符串无效（例如，包含不在字符集中的字符）
     InvalidInput,
 }
 
-impl Hachi64 {
-    /// Creates a new `Hachi64` instance with a custom alphabet.
-    ///
-    /// # Arguments
-    ///
-    /// * `alphabet_str` - A string containing 64 unique ASCII characters.
-    /// * `padding` - Whether to use padding (`=`) or not.
-    ///
-    /// # Errors
-    ///
-    /// Returns an error if the alphabet is not 64 characters long or contains non-unique characters.
-    pub fn new(alphabet_str: &str, padding: bool) -> Result<Self, HachiError> {
-        if alphabet_str.len() != 64 {
-            return Err(HachiError::InvalidAlphabetLength);
+/// 使用默认设置编码数据
+///
+/// # Examples
+///
+/// ```
+/// use hachi64::encode;
+///
+/// let encoded = encode(b"Hello");
+/// assert_eq!(encoded, "豆米啊拢嘎米多=");
+/// ```
+pub fn encode(data: &[u8]) -> String {
+    let alphabet = get_alphabet();
+    let padding = true; // 默认使用填充
+    let mut result = String::with_capacity((data.len() / 3 + 1) * 4);
+
+    for chunk in data.chunks(3) {
+        // 获取字节值，不足的用0填充
+        let byte1 = chunk[0];
+        let byte2 = chunk.get(1).copied().unwrap_or(0);
+        let byte3 = chunk.get(2).copied().unwrap_or(0);
+
+        // 将24位分成4个6位索引
+        let idx1 = byte1 >> 2;
+        let idx2 = ((byte1 & 0x03) << 4) | (byte2 >> 4);
+        let idx3 = ((byte2 & 0x0F) << 2) | (byte3 >> 6);
+        let idx4 = byte3 & 0x3F;
+
+        // 添加前两个字符（总是存在）
+        result.push(alphabet[idx1 as usize]);
+        result.push(alphabet[idx2 as usize]);
+
+        // 处理第三个字符
+        if chunk.len() > 1 {
+            result.push(alphabet[idx3 as usize]);
+        } else if padding {
+            result.push('=');
         }
 
-        let alphabet_bytes = alphabet_str.as_bytes();
-        let mut alphabet = [0u8; 64];
-        alphabet.copy_from_slice(alphabet_bytes);
-
-        let mut reverse_map = HashMap::with_capacity(64);
-        for (i, &byte) in alphabet.iter().enumerate() {
-            if reverse_map.insert(byte, i as u8).is_some() {
-                return Err(HachiError::InvalidAlphabetChars);
-            }
+        // 处理第四个字符
+        if chunk.len() > 2 {
+            result.push(alphabet[idx4 as usize]);
+        } else if padding {
+            result.push('=');
         }
-
-        Ok(Hachi64 {
-            alphabet,
-            reverse_map,
-            padding,
-        })
     }
-
-    /// Encodes a byte slice into a custom Base64 string.
-    pub fn encode(&self, data: &[u8]) -> String {
-        let mut result = String::with_capacity((data.len() / 3 + 1) * 4);
-
-        for chunk in data.chunks(3) {
-            let byte1 = chunk[0];
-            let byte2 = chunk.get(1).copied().unwrap_or(0);
-            let byte3 = chunk.get(2).copied().unwrap_or(0);
-
-            let idx1 = byte1 >> 2;
-            let idx2 = ((byte1 & 0x03) << 4) | (byte2 >> 4);
-            let idx3 = ((byte2 & 0x0F) << 2) | (byte3 >> 6);
-            let idx4 = byte3 & 0x3F;
-
-            result.push(self.alphabet[idx1 as usize] as char);
-            result.push(self.alphabet[idx2 as usize] as char);
-
-            if chunk.len() > 1 {
-                result.push(self.alphabet[idx3 as usize] as char);
-            } else if self.padding {
-                result.push('=');
-            }
-
-            if chunk.len() > 2 {
-                result.push(self.alphabet[idx4 as usize] as char);
-            } else if chunk.len() > 1 && self.padding {
-                result.push('=');
-            }
-        }
-        result
-    }
-
-    /// Decodes a custom Base64 string into a byte vector.
-    pub fn decode(&self, encoded_str: &str) -> Result<Vec<u8>, HachiError> {
-        let s = if self.padding {
-            encoded_str.trim_end_matches('=')
-        } else {
-            encoded_str
-        };
-        
-        let pad_count = if self.padding { encoded_str.len() - s.len() } else { 0 };
-
-        let mut result = Vec::with_capacity((s.len() * 3) / 4);
-
-        for chunk in s.as_bytes().chunks(4) {
-            let idx1 = *self.reverse_map.get(&chunk[0]).ok_or(HachiError::InvalidInput)?;
-            let idx2 = *self.reverse_map.get(&chunk[1]).ok_or(HachiError::InvalidInput)?;
-            let idx3 = if chunk.len() > 2 { *self.reverse_map.get(&chunk[2]).ok_or(HachiError::InvalidInput)? } else { 0 };
-            let idx4 = if chunk.len() > 3 { *self.reverse_map.get(&chunk[3]).ok_or(HachiError::InvalidInput)? } else { 0 };
-
-            let byte1 = (idx1 << 2) | (idx2 >> 4);
-            let byte2 = ((idx2 & 0x0F) << 4) | (idx3 >> 2);
-            let byte3 = ((idx3 & 0x03) << 6) | idx4;
-
-            result.push(byte1);
-            if chunk.len() > 2 {
-                result.push(byte2);
-            }
-            if chunk.len() > 3 {
-                result.push(byte3);
-            }
-        }
-
-        if self.padding {
-            let final_len = result.len() - pad_count;
-            result.truncate(final_len);
-        }
-
-        Ok(result)
-    }
+    result
 }
+
+/// 使用默认设置解码字符串
+///
+/// # Examples
+///
+/// ```
+/// use hachi64::decode;
+///
+/// let decoded = decode("豆米啊拢嘎米多=").unwrap();
+/// assert_eq!(decoded, b"Hello");
+/// ```
+pub fn decode(encoded_str: &str) -> Result<Vec<u8>, HachiError> {
+    let reverse_map = get_reverse_map();
+    let padding = true; // 默认处理填充
+
+    // 处理空字符串
+    if encoded_str.is_empty() {
+        return Ok(Vec::new());
+    }
+
+    // 处理填充
+    let pad_count = if padding {
+        encoded_str.chars().rev().take_while(|&c| c == '=').count()
+    } else {
+        0
+    };
+
+    let s = if pad_count > 0 {
+        &encoded_str[..encoded_str.len() - pad_count]
+    } else {
+        encoded_str
+    };
+
+    let chars: Vec<char> = s.chars().collect();
+    let mut result = Vec::with_capacity((chars.len() * 3) / 4);
+
+    // 按每4个字符为一组进行切分
+    for chunk in chars.chunks(4) {
+        // 获取索引值
+        let idx1 = *reverse_map.get(&chunk[0]).ok_or(HachiError::InvalidInput)?;
+        let idx2 = if chunk.len() > 1 {
+            *reverse_map.get(&chunk[1]).ok_or(HachiError::InvalidInput)?
+        } else {
+            0
+        };
+        let idx3 = if chunk.len() > 2 {
+            *reverse_map.get(&chunk[2]).ok_or(HachiError::InvalidInput)?
+        } else {
+            0
+        };
+        let idx4 = if chunk.len() > 3 {
+            *reverse_map.get(&chunk[3]).ok_or(HachiError::InvalidInput)?
+        } else {
+            0
+        };
+
+        // 将4个6位索引重组为3个字节
+        let byte1 = (idx1 << 2) | (idx2 >> 4);
+        result.push(byte1);
+
+        if chunk.len() > 2 {
+            let byte2 = ((idx2 & 0x0F) << 4) | (idx3 >> 2);
+            result.push(byte2);
+        }
+
+        if chunk.len() > 3 {
+            let byte3 = ((idx3 & 0x03) << 6) | idx4;
+            result.push(byte3);
+        }
+    }
+    Ok(result)
+}
+
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    const STANDARD_ALPHABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    const URL_SAFE_ALPHABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-
     #[test]
-    fn test_new_hachi64() {
-        assert!(Hachi64::new(STANDARD_ALPHABET, true).is_ok());
-        assert_eq!(Hachi64::new("short", true), Err(HachiError::InvalidAlphabetLength));
-        assert_eq!(Hachi64::new("abcabc...", true), Err(HachiError::InvalidAlphabetChars));
+    fn test_encode_hachi64_examples() {
+        // 测试 README 中的编码示例
+        assert_eq!(encode(b"Hello"), "豆米啊拢嘎米多=");
+        assert_eq!(encode(b"abc"), "西阿南呀");
+        assert_eq!(encode(b"Python"), "抖咪酷丁息米都慢");
+        assert_eq!(encode(b"Hello, World!"), "豆米啊拢嘎米多拢迷集伽漫咖苦播库迷律==");
+        assert_eq!(encode(b"Base64"), "律苦集叮希斗西丁");
+        assert_eq!(encode(b"Hachi64"), "豆米集呀息米库咚背哈==");
     }
 
     #[test]
-    fn test_encode_standard() {
-        let encoder = Hachi64::new(STANDARD_ALPHABET, true).unwrap();
-        assert_eq!(encoder.encode(b"Hello, World!"), "SGVsbG8sIFdvcmxkIQ==");
-        assert_eq!(encoder.encode(b"rust"), "cnVzdA==");
-        assert_eq!(encoder.encode(b"a"), "YQ==");
-        assert_eq!(encoder.encode(b"ab"), "YWI=");
-        assert_eq!(encoder.encode(b"abc"), "YWJj");
+    fn test_decode_hachi64_examples() {
+        // 测试 README 中的解码示例
+        assert_eq!(decode("豆米啊拢嘎米多=").unwrap(), b"Hello");
+        assert_eq!(decode("西阿南呀").unwrap(), b"abc");
+        assert_eq!(decode("抖咪酷丁息米都慢").unwrap(), b"Python");
+        assert_eq!(decode("豆米啊拢嘎米多拢迷集伽漫咖苦播库迷律==").unwrap(), b"Hello, World!");
+        assert_eq!(decode("律苦集叮希斗西丁").unwrap(), b"Base64");
+        assert_eq!(decode("豆米集呀息米库咚背哈==").unwrap(), b"Hachi64");
     }
 
     #[test]
-    fn test_decode_standard() {
-        let decoder = Hachi64::new(STANDARD_ALPHABET, true).unwrap();
-        assert_eq!(decoder.decode("SGVsbG8sIFdvcmxkIQ==").unwrap(), b"Hello, World!");
-        assert_eq!(decoder.decode("cnVzdA==").unwrap(), b"rust");
-        assert_eq!(decoder.decode("YQ==").unwrap(), b"a");
-        assert_eq!(decoder.decode("YWI=").unwrap(), b"ab");
-        assert_eq!(decoder.decode("YWJj").unwrap(), b"abc");
+    fn test_encode_edge_cases() {
+        // 空字符串
+        assert_eq!(encode(b""), "");
+        
+        // 单字节
+        assert_eq!(encode(b"a"), "西律==");
+        
+        // 双字节
+        assert_eq!(encode(b"ab"), "西阿南=");
     }
 
     #[test]
-    fn test_encode_url_safe() {
-        let encoder = Hachi64::new(URL_SAFE_ALPHABET, true).unwrap();
-        // 251, 239, 191 -> /+/ -> _-_
-        assert_eq!(encoder.encode(&[251, 239, 191]), "-_-_");
-    }
-
-    #[test]
-    fn test_decode_url_safe() {
-        let decoder = Hachi64::new(URL_SAFE_ALPHABET, true).unwrap();
-        assert_eq!(decoder.decode("-_-_").unwrap(), &[251, 239, 191]);
-    }
-    
-    #[test]
-    fn test_no_padding_encode() {
-        let encoder = Hachi64::new(STANDARD_ALPHABET, false).unwrap();
-        assert_eq!(encoder.encode(b"a"), "YQ");
-        assert_eq!(encoder.encode(b"ab"), "YWI");
-        assert_eq!(encoder.encode(b"abc"), "YWJj");
-    }
-
-    #[test]
-    fn test_no_padding_decode() {
-        let decoder = Hachi64::new(STANDARD_ALPHABET, false).unwrap();
-        assert_eq!(decoder.decode("YQ").unwrap(), b"a");
-        assert_eq!(decoder.decode("YWI").unwrap(), b"ab");
-        assert_eq!(decoder.decode("YWJj").unwrap(), b"abc");
+    fn test_decode_edge_cases() {
+        // 空字符串
+        assert_eq!(decode("").unwrap(), b"");
+        
+        // 单字节
+        assert_eq!(decode("西律==").unwrap(), b"a");
+        
+        // 双字节
+        assert_eq!(decode("西阿南=").unwrap(), b"ab");
     }
 
     #[test]
     fn test_decode_invalid_input() {
-        let decoder = Hachi64::new(STANDARD_ALPHABET, true).unwrap();
-        assert_eq!(decoder.decode("SGVsbG8sIFdvcmxkIQ="), Err(HachiError::InvalidInput)); // Contains '=' in the middle
-        assert_eq!(decoder.decode("SGVsbG8.IFdvcmxkIQ=="), Err(HachiError::InvalidInput)); // Contains '.'
+        // 包含不在字符集中的字符
+        assert_eq!(decode("ABC"), Err(HachiError::InvalidInput));
+        assert_eq!(decode("哈哈哈X"), Err(HachiError::InvalidInput));
+    }
+
+    #[test]
+    fn test_roundtrip() {
+        let test_data = b"The quick brown fox jumps over the lazy dog";
+        
+        let encoded = encode(test_data);
+        let decoded = decode(&encoded).unwrap();
+        
+        assert_eq!(decoded, test_data);
+    }
+
+    #[test]
+    fn test_binary_data() {
+        let binary_data: Vec<u8> = (0..=255).collect();
+        
+        let encoded = encode(&binary_data);
+        let decoded = decode(&encoded).unwrap();
+        
+        assert_eq!(decoded, binary_data);
     }
 }
