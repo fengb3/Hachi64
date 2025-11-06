@@ -97,6 +97,10 @@ pub fn encode(data: &[u8]) -> String {
 /// let decoded = decode("豆米啊拢嘎米多=").unwrap();
 /// assert_eq!(decoded, b"Hello");
 /// ```
+///
+/// # Errors
+///
+/// 当输入字符串包含不在哈吉米64字符集中的字符时，返回 [`HachiError::InvalidInput`]。
 pub fn decode(encoded_str: &str) -> Result<Vec<u8>, HachiError> {
     let reverse_map = get_reverse_map();
     let padding = true; // 默认处理填充
