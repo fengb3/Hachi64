@@ -88,7 +88,7 @@ func TestDecodeEdgeCases(t *testing.T) {
 	}{
 		{"empty", "", []byte("")},
 		{"single byte", "西律==", []byte("a")},
-		{"two bytes", "西阿南=", []byte("ab")},
+		{"two bytes", "西阿迷=", []byte("ab")},
 		{"three bytes", "西阿南呀", []byte("abc")},
 	}
 
