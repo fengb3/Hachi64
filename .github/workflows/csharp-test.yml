@@ -15,9 +15,14 @@ jobs:
         with:
           dotnet-version: '8.x'
     
-      - name: Build with MSBuild
-        run: msbuild Hachi64.sln
-        working-directory: ./csharp   
+      - uses: Elskom/build-dotnet@v1.1.1
+        with:
+          # Filepath of the solution of which contains all the projects to be built, optionally tested and packed, relative to root of repository
+          SOLUTION_FILE_PATH: ./csharp/Hachi64.sln
+          # Flag to toggle running unit tests for the projects built, disabled by default
+          TEST: true
+          # Flag to toggle packing the projects built
+          PACK: false 
 
       - name: Run C# tests
         working-directory: ./csharp
