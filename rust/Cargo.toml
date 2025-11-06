@@ -1,0 +1,8 @@
+[package]
+name = "hachi64"
+version = "0.1.0"
+edition = "2021"
+description = "A library for custom Base64 encoding and decoding."
+license = "MIT"
+
+[dependencies]
