@@ -29,3 +29,6 @@ jobs:
 
   js-ts-test:
     uses: ./.github/workflows/js-ts-test.yml
+
+  kotlin-test:
+    uses: ./.github/workflows/kotlin-test.yml
