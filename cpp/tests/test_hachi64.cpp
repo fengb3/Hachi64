@@ -2,6 +2,7 @@
 #include "hachi64/hachi64.hpp"
 #include <string>
 #include <vector>
+#include <set>
 
 using namespace hachi64;
 
@@ -56,7 +57,7 @@ TEST(Hachi64Test, DecodeEdgeCases) {
     EXPECT_EQ(bytes_to_str(decode("西律==")), "a");
     
     // 双字节
-    EXPECT_EQ(bytes_to_str(decode("西阿南=")), "ab");
+    EXPECT_EQ(bytes_to_str(decode("西阿迷=")), "ab");
 }
 
 // 测试解码无效输入
