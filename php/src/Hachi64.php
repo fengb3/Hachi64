@@ -109,7 +109,6 @@ class Hachi64
         }
         
         // 处理填充
-        $padCount = 0;
         if ($padding) {
             $padCount = substr_count($encodedStr, '=');
             if ($padCount > 0) {

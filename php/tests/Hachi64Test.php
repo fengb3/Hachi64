@@ -134,7 +134,7 @@ class Hachi64Test extends TestCase
     public function testEmptyString()
     {
         $result = Hachi64::decode("");
-        $this->assertEquals("", $result, "空字符串应该解码为空字节");
+        $this->assertEquals("", $result, "空字符串应该解码为空字符串");
     }
     
     /**
