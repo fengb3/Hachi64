@@ -81,14 +81,10 @@ module Hachi64
       chunk = encoded_str[i...chunk_end]
       i += 4
 
-      begin
-        idx1 = reverse_map[chunk[0]]
-        idx2 = chunk.length > 1 ? reverse_map[chunk[1]] : 0
-        idx3 = chunk.length > 2 ? reverse_map[chunk[2]] : 0
-        idx4 = chunk.length > 3 ? reverse_map[chunk[3]] : 0
-      rescue TypeError => e
-        raise ArgumentError, "Invalid character in input: #{e}"
-      end
+      idx1 = reverse_map[chunk[0]]
+      idx2 = chunk.length > 1 ? reverse_map[chunk[1]] : 0
+      idx3 = chunk.length > 2 ? reverse_map[chunk[2]] : 0
+      idx4 = chunk.length > 3 ? reverse_map[chunk[3]] : 0
 
       raise ArgumentError, "Invalid character in input" if idx1.nil? || (chunk.length > 1 && idx2.nil?)
 
