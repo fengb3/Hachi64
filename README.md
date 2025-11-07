@@ -30,6 +30,8 @@
 - [javascript/typescript](./js/README.md)
 - [kotlin](./kotlin/README.md)
 - [swift](./swift/README.md)
+- [ruby](./ruby/README.md)
+- [dart](./dart/README.md)
 
 ## 字符集分组
 
