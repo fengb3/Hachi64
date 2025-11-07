@@ -29,6 +29,7 @@
 - [go](./go/README.md)
 - [javascript/typescript](./js/README.md)
 - [kotlin](./kotlin/README.md)
+- [php](./php/README.md)
 - [cpp](./cpp/README.md)
 - [swift](./swift/README.md)
 - [ruby](./ruby/README.md)
