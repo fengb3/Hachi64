@@ -31,4 +31,4 @@ jobs:
 
     - name: Run tests
       working-directory: ./php
-      run: vendor/bin/phpunit
+      run: vendor/bin/phpunit tests
