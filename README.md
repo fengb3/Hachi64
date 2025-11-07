@@ -29,6 +29,7 @@
 - [go](./go/README.md)
 - [javascript/typescript](./js/README.md)
 - [kotlin](./kotlin/README.md)
+- [php](./php/README.md)
 
 ## 字符集分组
 
