@@ -20,6 +20,14 @@ gem install hachi64-0.1.0.gem
 require_relative 'lib/hachi64'
 ```
 
+### 运行示例
+
+查看并运行 `example.rb` 来了解基本用法：
+
+```bash
+ruby example.rb
+```
+
 ## 使用方法
 
 ### 基本使用
