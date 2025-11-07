@@ -4,9 +4,6 @@
 name: Publish Python Package to PyPI
 
 on:
-  push:
-    tags:
-      - 'v*.*.*' # Trigger on tags like v1.0.0, v0.2.1, etc.
   workflow_dispatch: # Allows manual triggering
 
 jobs:
