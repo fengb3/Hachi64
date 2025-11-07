@@ -1,16 +1,16 @@
-name: Python CI
+name: Python Unit Test
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'python/**'
-      - '.github/workflows/python-test.yml'
+      # - 'python/**'
+      - '.github/workflows/python/python-test.yml'
   pull_request:
     branches: [ main ]
     paths:
-      - 'python/**'
-      - '.github/workflows/python-test.yml'
+      # - 'python/**'
+      - '.github/workflows/python/python-test.yml'
   workflow_call:
 
 jobs:

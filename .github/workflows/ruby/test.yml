@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'ruby/**'
-      - '.github/workflows/ruby-test.yml'
+      - '.github/workflows/ruby/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'ruby/**'
-      - '.github/workflows/ruby-test.yml'
+      - '.github/workflows/ruby/**'
   workflow_call:
 
 jobs:

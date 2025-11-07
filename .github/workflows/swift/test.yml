@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'swift/**'
-      - '.github/workflows/swift-test.yml'
+      - '.github/workflows/swift/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'swift/**'
-      - '.github/workflows/swift-test.yml'
+      - '.github/workflows/swift/**'
   workflow_call:
 
 jobs:

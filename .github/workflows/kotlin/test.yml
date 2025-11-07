@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'kotlin/**'
-      - '.github/workflows/kotlin-test.yml'
+      - '.github/workflows/kotlin/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'kotlin/**'
-      - '.github/workflows/kotlin-test.yml'
+      - '.github/workflows/kotlin/**'
   workflow_call:
 
 permissions:

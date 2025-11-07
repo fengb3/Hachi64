@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'php/**'
-      - '.github/workflows/php-test.yml'
+      - '.github/workflows/php/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'php/**'
-      - '.github/workflows/php-test.yml'
+      - '.github/workflows/php/**'
   workflow_call:
 
 jobs:

@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'cpp/**'
-      - '.github/workflows/cpp-test.yml'
+      - '.github/workflows/cpp/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'cpp/**'
-      - '.github/workflows/cpp-test.yml'
+      - '.github/workflows/cpp/**'
   workflow_call:
 
 jobs:

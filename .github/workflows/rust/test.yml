@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'rust/**'
-      - '.github/workflows/rust-test.yml'
+      - '.github/workflows/rust/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'rust/**'
-      - '.github/workflows/rust-test.yml'
+      - '.github/workflows/rust/**'
   workflow_call:
 
 jobs:

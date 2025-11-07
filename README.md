@@ -35,6 +35,10 @@
 - [ruby](./ruby/README.md)
 - [dart](./dart/README.md)
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## 字符集分组
 
 哈吉米64字符集按发音相似性分组，主要音组包括：

@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'js/**'
-      - '.github/workflows/js-ts-test.yml'
+      - '.github/workflows/js-ts/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'js/**'
-      - '.github/workflows/js-ts-test.yml'
+      - '.github/workflows/js-ts/**'
   workflow_call:
 
 jobs:

@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'java/**'
-      - '.github/workflows/java-test.yml'
+      - '.github/workflows/java/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'java/**'
-      - '.github/workflows/java-test.yml'
+      - '.github/workflows/java/**'
   workflow_call:
 
 jobs:

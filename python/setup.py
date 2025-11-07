@@ -8,7 +8,7 @@ setup(
     description="A library for custom Base64 encoding and decoding.",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/your_username/hachi64",
+    url="https://github.com/fengb3/hachi64",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

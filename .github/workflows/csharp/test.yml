@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'csharp/**'
-      - '.github/workflows/csharp-test.yml'
+      - '.github/workflows/csharp/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'csharp/**'
-      - '.github/workflows/csharp-test.yml'
+      - '.github/workflows/csharp/**'
   workflow_call:
 
 jobs:
@@ -33,4 +33,4 @@ jobs:
           # Flag to toggle running unit tests for the projects built, disabled by default
           TEST: true
           # Flag to toggle packing the projects built
-          PACK: false 
+          PACK: false

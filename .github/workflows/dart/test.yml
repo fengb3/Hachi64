@@ -5,12 +5,12 @@ on:
     branches: [ main ]
     paths:
       - 'dart/**'
-      - '.github/workflows/dart-test.yml'
+      - '.github/workflows/dart/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'dart/**'
-      - '.github/workflows/dart-test.yml'
+      - '.github/workflows/dart/**'
   workflow_call:
 
 jobs:
