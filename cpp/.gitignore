@@ -16,6 +16,7 @@ cmake-build-*/
 *.out
 hachi64_test
 example
+test_ab
 
 # CMake files
 CMakeCache.txt
