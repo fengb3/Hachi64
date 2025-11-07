@@ -1,6 +1,16 @@
-name: Reusable Go Test
+name: Go CI
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'go/**'
+      - '.github/workflows/go-test.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'go/**'
+      - '.github/workflows/go-test.yml'
   workflow_call:
 
 jobs:

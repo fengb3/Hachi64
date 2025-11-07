@@ -1,6 +1,16 @@
-name: Reusable Kotlin Test
+name: Kotlin CI
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'kotlin/**'
+      - '.github/workflows/kotlin-test.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'kotlin/**'
+      - '.github/workflows/kotlin-test.yml'
   workflow_call:
 
 permissions:

@@ -1,6 +1,16 @@
-name: Reusable JS/TS Test
+name: JS/TS CI
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'js/**'
+      - '.github/workflows/js-ts-test.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'js/**'
+      - '.github/workflows/js-ts-test.yml'
   workflow_call:
 
 jobs:

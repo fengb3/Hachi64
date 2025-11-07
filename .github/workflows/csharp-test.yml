@@ -1,6 +1,16 @@
-name: Reusable C# Test
+name: C# CI
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'csharp/**'
+      - '.github/workflows/csharp-test.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'csharp/**'
+      - '.github/workflows/csharp-test.yml'
   workflow_call:
 
 jobs:

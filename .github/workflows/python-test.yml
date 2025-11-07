@@ -1,6 +1,16 @@
-name: Reusable Python Test
+name: Python CI
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'python/**'
+      - '.github/workflows/python-test.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'python/**'
+      - '.github/workflows/python-test.yml'
   workflow_call:
 
 jobs:
