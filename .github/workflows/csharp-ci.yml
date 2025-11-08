@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    uses: ./.github/workflows/charp-test.yml
+    uses: ./.github/workflows/csharp-test.yml
 
   publish:
     name: Build and publish C# package to NuGet
