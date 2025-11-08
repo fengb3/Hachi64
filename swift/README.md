@@ -174,6 +174,57 @@ swift test
 - Swift 5.7 或更高版本
 - macOS 12.0+ / iOS 15.0+ / tvOS 15.0+ / watchOS 8.0+ / Linux
 
+## 发布流程
+
+本项目使用 GitHub Actions 自动化发布流程。
+
+### 配置说明
+
+**无需配置额外的 Secrets**
+
+Swift Package Manager 通过 Git 标签分发包，不需要发布到中央注册表。GitHub Actions 使用自动提供的 `GITHUB_TOKEN` 创建 Release，无需额外配置。
+
+### 如何触发发布
+
+1. **更新版本号**
+   
+   编辑 `swift/VERSION` 文件，修改版本号：
+   ```bash
+   # 例如从 0.1.0 更新到 0.1.1
+   echo "0.1.1" > swift/VERSION
+   ```
+
+2. **提交并推送到 main 分支**
+   ```bash
+   git add swift/VERSION
+   git commit -m "Bump Swift package version to 0.1.1"
+   git push origin main
+   ```
+
+3. **自动发布**
+   
+   当 `swift/VERSION` 文件被修改并推送到 main 分支时，GitHub Actions 会自动：
+   - 运行所有测试
+   - 创建 GitHub Release
+   - 创建 Git 标签（格式：`swift-v{version}`，例如 `swift-v0.1.1`）
+
+### 版本号规范
+
+使用[语义化版本](https://semver.org/lang/zh-CN/)：`MAJOR.MINOR.PATCH`
+
+- **MAJOR**: 不兼容的 API 修改
+- **MINOR**: 向下兼容的功能性新增
+- **PATCH**: 向下兼容的问题修正
+
+### 手动触发工作流
+
+也可以在 GitHub 网页上手动触发工作流：
+
+1. 进入仓库的 Actions 标签页
+2. 选择 "Swift Package CI" 工作流
+3. 点击 "Run workflow" 按钮
+4. 选择分支并运行
+
 ## 许可证
 
 与主项目保持一致。
@@ -182,3 +233,4 @@ swift test
 
 - [主项目 README](../README.md)
 - [实现指南](../docs/implemtation_guide.md)
+- [CI 工作流程模式](../docs/ci_workflow_pattern.md)
