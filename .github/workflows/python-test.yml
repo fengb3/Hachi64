@@ -13,6 +13,8 @@ on:
       - '.github/workflows/python/python-test.yml'
   workflow_call:
 
+  workflow_dispatch:
+  
 jobs:
   test:
     runs-on: ubuntu-latest
