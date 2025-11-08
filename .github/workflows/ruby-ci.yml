@@ -1,0 +1,106 @@
+name: Ruby Main CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ruby/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/ruby-test.yml
+
+  publish:
+    name: Build and publish Ruby gem to RubyGems
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if hachi64.gemspec was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "ruby/hachi64.gemspec"; then
+          echo "Version file was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from hachi64.gemspec
+          VERSION=$(grep -oP 'spec\.version\s*=\s*"\K[^"]+' ruby/hachi64.gemspec)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "Version file was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set up Ruby
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: false
+
+    - name: Install dependencies
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./ruby
+      run: |
+        gem install bundler
+        bundle install
+        
+    - name: Build gem
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./ruby
+      run: |
+        gem build hachi64.gemspec
+
+    - name: Publish gem to RubyGems
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./ruby
+      env:
+        GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+      run: |
+        mkdir -p ~/.gem
+        echo ":rubygems_api_key: ${GEM_HOST_API_KEY}" > ~/.gem/credentials
+        chmod 0600 ~/.gem/credentials
+        gem push hachi64-${{ steps.version_check.outputs.version }}.gem
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ruby-v${{ steps.version_check.outputs.version }}
+        name: Ruby v${{ steps.version_check.outputs.version }}
+        body: |
+          ## Ruby Gem Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 安装
+          ```bash
+          gem install hachi64 -v ${{ steps.version_check.outputs.version }}
+          ```
+          
+          或在 Gemfile 中添加：
+          ```ruby
+          gem 'hachi64', '~> ${{ steps.version_check.outputs.version }}'
+          ```
+          
+          ### 🔗 链接
+          - [RubyGems.org](https://rubygems.org/gems/hachi64/versions/${{ steps.version_check.outputs.version }})
+          - [文档](https://github.com/${{ github.repository }}/tree/main/ruby)
+          
+          ### 📋 变更
+          此版本包含 Ruby gem 的更新。
+        files: |
+          ruby/hachi64-*.gem
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
