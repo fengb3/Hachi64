@@ -92,7 +92,7 @@ jobs:
           ```
           
           ### 🔗 链接
-          - [pub.dev Package](https://pub.dev/packages/hachi64/${{ steps.version_check.outputs.version }})
+          - [pub.dev Package](https://pub.dev/packages/hachi64/versions/${{ steps.version_check.outputs.version }})
           - [API 文档](https://pub.dev/documentation/hachi64/${{ steps.version_check.outputs.version }}/)
           - [GitHub](https://github.com/${{ github.repository }}/tree/main/dart)
           
