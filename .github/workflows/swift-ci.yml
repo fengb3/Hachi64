@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/swift-test.yml
+    permissions:
+      contents: read
 
   publish:
     name: Create GitHub Release for Swift Package
