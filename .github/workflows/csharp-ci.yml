@@ -1,0 +1,96 @@
+name: C# Main CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'csharp/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/charp-test.yml
+
+  publish:
+    name: Build and publish C# package to NuGet
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if .csproj was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "csharp/Hachi64/Hachi64.csproj"; then
+          echo "Version file was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from .csproj
+          VERSION=$(grep -oP '<Version>\K[^<]+' csharp/Hachi64/Hachi64.csproj)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "Version file was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set up .NET
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
+
+    - name: Restore dependencies
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./csharp
+      run: dotnet restore
+
+    - name: Build package
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./csharp/Hachi64
+      run: dotnet pack -c Release --no-restore
+
+    - name: Publish package to NuGet
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./csharp/Hachi64
+      run: dotnet nuget push bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: csharp-v${{ steps.version_check.outputs.version }}
+        name: C# v${{ steps.version_check.outputs.version }}
+        body: |
+          ## C# Package Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 Installation
+          ```bash
+          dotnet add package Hachi64 --version ${{ steps.version_check.outputs.version }}
+          ```
+          
+          Or in your `.csproj` file:
+          ```xml
+          <PackageReference Include="Hachi64" Version="${{ steps.version_check.outputs.version }}" />
+          ```
+          
+          ### 🔗 Links
+          - [NuGet Package](https://www.nuget.org/packages/Hachi64/${{ steps.version_check.outputs.version }}/)
+          - [Documentation](https://github.com/${{ github.repository }}/tree/main/csharp)
+          
+          ### 📋 Changes
+          This release includes updates to the C# package.
+        files: |
+          csharp/Hachi64/bin/Release/*.nupkg
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
