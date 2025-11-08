@@ -1,0 +1,98 @@
+name: Rust Publish to Crates.io
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'rust/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/rust-test.yml
+    permissions:
+      contents: read
+
+  publish:
+    name: Build and publish to Crates.io
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if Cargo.toml was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "rust/Cargo.toml"; then
+          echo "Cargo.toml was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from Cargo.toml
+          VERSION=$(grep -m1 '^version = ' rust/Cargo.toml | sed 's/version = "\(.*\)"/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "Cargo.toml was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set up Rust
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - name: Verify package
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./rust
+      run: |
+        cargo package --list
+        cargo package --verify
+
+    - name: Publish to Crates.io
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./rust
+      env:
+        CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      run: cargo publish
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: rust-v${{ steps.version_check.outputs.version }}
+        name: Rust v${{ steps.version_check.outputs.version }}
+        body: |
+          ## Rust Package Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 安装
+          ```toml
+          [dependencies]
+          hachi64 = "${{ steps.version_check.outputs.version }}"
+          ```
+          
+          或使用 cargo 命令：
+          ```bash
+          cargo add hachi64@${{ steps.version_check.outputs.version }}
+          ```
+          
+          ### 🔗 链接
+          - [Crates.io](https://crates.io/crates/hachi64/${{ steps.version_check.outputs.version }})
+          - [文档](https://docs.rs/hachi64/${{ steps.version_check.outputs.version }})
+          - [GitHub](https://github.com/${{ github.repository }}/tree/main/rust)
+          
+          ### 📋 变更
+          此版本包含 Rust 包的更新。
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
