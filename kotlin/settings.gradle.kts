@@ -1,1 +1,1 @@
-rootProject.name = "hachi64-kotlin"
+rootProject.name = "hachi64"
