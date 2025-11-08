@@ -16,3 +16,6 @@ jobs:
   publish:
     uses: ./.github/workflows/python-publish.yml
     needs: test
+    permissions:
+      id-token: write  # Required for PyPI trusted publishing
+      contents: read   # Required for checkout
