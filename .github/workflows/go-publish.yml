@@ -1,0 +1,102 @@
+name: Go Publish to pkg.go.dev
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'go/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/go-test.yml
+    permissions:
+      contents: read
+
+  publish:
+    name: Publish to pkg.go.dev
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if version.go was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "go/version.go"; then
+          echo "version.go was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from version.go
+          VERSION=$(grep -oP 'const Version = "\K[^"]+' go/version.go)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "version.go was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set up Go
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.x'
+
+    - name: Verify Go module
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./go
+      run: |
+        go mod verify
+        go mod tidy
+        go build ./...
+
+    - name: Create and push Git tag
+      if: steps.version_check.outputs.version_changed == 'true'
+      run: |
+        TAG="go/v${{ steps.version_check.outputs.version }}"
+        echo "Creating tag: $TAG"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a "$TAG" -m "Release Go module version ${{ steps.version_check.outputs.version }}"
+        git push origin "$TAG"
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: go/v${{ steps.version_check.outputs.version }}
+        name: Go v${{ steps.version_check.outputs.version }}
+        body: |
+          ## Go Package Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 安装
+          ```bash
+          go get github.com/fengb3/Hachi64/go@v${{ steps.version_check.outputs.version }}
+          ```
+          
+          或者在 go.mod 中添加：
+          ```go
+          require github.com/fengb3/Hachi64/go v${{ steps.version_check.outputs.version }}
+          ```
+          
+          ### 🔗 链接
+          - [pkg.go.dev](https://pkg.go.dev/github.com/fengb3/Hachi64/go@v${{ steps.version_check.outputs.version }})
+          - [GitHub](https://github.com/${{ github.repository }}/tree/main/go)
+          
+          ### 📋 变更
+          此版本包含 Go 包的更新。
+          
+          ### ℹ️ pkg.go.dev 说明
+          模块将在推送 Git tag 后自动被 pkg.go.dev 索引。通常需要几分钟时间才能在 pkg.go.dev 上显示。
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
