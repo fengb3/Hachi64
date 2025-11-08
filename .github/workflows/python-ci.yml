@@ -8,6 +8,8 @@ on:
       - 'python/**'
   workflow_dispatch:
 
+
+
 jobs:
   test:
     uses: ./.github/workflows/python-test.yml
@@ -16,6 +18,8 @@ jobs:
     name: Build and publish Python distributions to PyPI
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
