@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/rust-test.yml
+    permissions:
+      contents: read
 
   publish:
     name: Build and publish to Crates.io
