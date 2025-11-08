@@ -5,6 +5,7 @@ name: Publish Python Package to PyPI
 
 on:
   workflow_call: # Allows this workflow to be called by other workflows
+
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -34,4 +35,4 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ secrets.PYPI_API_TOKEN }}
-        packages_dir: python/dist/
+        packages-dir: python/dist/

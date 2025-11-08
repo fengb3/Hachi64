@@ -16,5 +16,3 @@ jobs:
   publish:
     uses: ./.github/workflows/python-publish.yml
     needs: test
-    secrets:
-      PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
