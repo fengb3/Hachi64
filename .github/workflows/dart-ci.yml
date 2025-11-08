@@ -11,6 +11,8 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/dart-test.yml
+    permissions:
+      contents: read
 
   publish:
     name: Build and publish Dart package to pub.dev
