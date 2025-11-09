@@ -4,7 +4,7 @@ plugins {
     id("signing")
 }
 
-group = "com.hachi64"
+group = "io.github.fengb3"
 version = "0.1.0"
 
 repositories {
