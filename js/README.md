@@ -13,9 +13,21 @@ This is the JavaScript/TypeScript implementation of the Hachi64 custom Base64 en
 
 ## Installation
 
-**Note:** This package is not yet published to npm. To use it, you can:
+### From npm (Recommended - Once Published)
 
-### Option 1: Install from source
+**Status:** 📦 Package name `hachi64` is available on npm but not yet published.
+
+**To publish:** Repository maintainer needs to configure `NPM_TOKEN` in GitHub Secrets. See [NPM_SETUP.md](./NPM_SETUP.md) for instructions.
+
+Once published, install with:
+
+```bash
+npm install hachi64
+```
+
+### Temporary: Install from source
+
+Until the package is published to npm, you can install from source:
 
 ```bash
 cd js
@@ -23,26 +35,7 @@ npm install
 npm run build
 ```
 
-Then copy the built files to your project.
-
-### Option 2: Install from GitHub
-
-```bash
-npm install github:fengb3/Hachi64#main
-```
-
-And import from:
-```typescript
-import { encode, decode } from 'hachi64/js/dist/index.js';
-```
-
-### Future: npm installation (planned)
-
-Once published to npm, you'll be able to install with:
-
-```bash
-npm install hachi64
-```
+Then copy the built files to your project, or use it directly from the repository.
 
 ## Quick Start
 
