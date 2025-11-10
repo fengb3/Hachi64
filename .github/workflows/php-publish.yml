@@ -82,10 +82,18 @@ jobs:
         echo "HTTP Status: $HTTP_CODE"
         echo "Response: $BODY"
         
-        if [ "$HTTP_CODE" -eq 200 ] && echo "$BODY" | grep -q '"status":"success"'; then
-          echo "✅ Packagist updated successfully"
+        # Packagist returns 202 (Accepted) for successful update requests
+        if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 202 ]; then
+          if echo "$BODY" | grep -q '"status":"success"'; then
+            echo "✅ Packagist updated successfully"
+            if echo "$BODY" | grep -q '"jobs"'; then
+              echo "📦 Update job queued and will be processed shortly"
+            fi
+          else
+            echo "⚠️  Unexpected response format: $BODY"
+          fi
         else
-          echo "❌ Packagist update failed"
+          echo "❌ Packagist update failed with HTTP $HTTP_CODE"
           echo "Please check your PACKAGIST_USERNAME and PACKAGIST_TOKEN secrets"
           exit 1
         fi
