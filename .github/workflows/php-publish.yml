@@ -66,10 +66,29 @@ jobs:
     - name: Trigger Packagist update
       if: steps.version_check.outputs.version_changed == 'true'
       run: |
-        # Trigger Packagist to update the package from GitHub
-        # This will pull the latest tag and update package information
-        curl -XPOST -H "Content-Type: application/json" \
-          "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}"
+        # Trigger Packagist to update the package via API
+        # The API endpoint format: https://packagist.org/api/update-package?username=...&apiToken=...
+        # POST body must contain the repository URL
+        echo "Triggering Packagist update for hachi64/hachi64..."
+        
+        RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+          "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{"repository":{"url":"https://github.com/${{ github.repository }}"}}')
+        
+        HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+        BODY=$(echo "$RESPONSE" | sed '$d')
+        
+        echo "HTTP Status: $HTTP_CODE"
+        echo "Response: $BODY"
+        
+        if [ "$HTTP_CODE" -eq 200 ] && echo "$BODY" | grep -q '"status":"success"'; then
+          echo "✅ Packagist updated successfully"
+        else
+          echo "❌ Packagist update failed"
+          echo "Please check your PACKAGIST_USERNAME and PACKAGIST_TOKEN secrets"
+          exit 1
+        fi
 
     - name: Create GitHub Release
       if: steps.version_check.outputs.version_changed == 'true'
