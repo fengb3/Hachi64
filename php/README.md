@@ -4,40 +4,34 @@
 
 ## 安装
 
-**注意：** 此包尚未发布到 Packagist。要使用它，可以：
+### 从 Private Packagist 安装
 
-### 选项 1: 手动安装
+此包发布在 Private Packagist 上。首先配置 Composer 仓库：
 
-将 `src/Hachi64.php` 文件复制到你的项目中，并使用 `require` 或 `include` 引入：
-
-```php
-require_once 'path/to/Hachi64.php';
+```bash
+composer config repositories.fengb3 composer https://packagist.com/orgs/fengb3/packages/
 ```
 
-### 选项 2: 使用 Composer 本地路径
+然后安装包：
 
-在你的 `composer.json` 中添加：
+```bash
+composer require fengb3/hachi64
+```
+
+或在你的 `composer.json` 中添加：
 
 ```json
 {
     "repositories": [
         {
-            "type": "path",
-            "url": "../path/to/Hachi64/php"
+            "type": "composer",
+            "url": "https://packagist.com/orgs/fengb3/packages/"
         }
     ],
     "require": {
-        "hachi64/hachi64": "*"
+        "fengb3/hachi64": "^0.1"
     }
 }
-```
-
-### 未来：Packagist 安装（计划中）
-
-一旦发布到 Packagist，你将能够使用以下命令安装：
-
-```bash
-composer require hachi64/hachi64
 ```
 
 ## 使用方法

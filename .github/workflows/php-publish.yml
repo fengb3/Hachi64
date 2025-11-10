@@ -63,18 +63,17 @@ jobs:
         # The version field is needed for CICD in this monorepo setup
         composer validate
 
-    - name: Trigger Packagist update
+    - name: Trigger Private Packagist update
       if: steps.version_check.outputs.version_changed == 'true'
       run: |
-        # Trigger Packagist to update the package via API
-        # The API endpoint format: https://packagist.org/api/update-package?username=...&apiToken=...
-        # POST body must contain the repository URL
-        echo "Triggering Packagist update for hachi64/hachi64..."
+        # Trigger Private Packagist (packagist.com) to update the package
+        # Private Packagist API endpoint: https://packagist.com/api/packages/{orgName}/{packageName}/update
+        echo "Triggering Private Packagist update for fengb3/hachi64..."
         
         RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
-          "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
-          -H "Content-Type: application/json" \
-          -d '{"repository":{"url":"https://github.com/${{ github.repository }}"}}')
+          "https://packagist.com/api/packages/fengb3/hachi64/update" \
+          -H "Authorization: Bearer ${{ secrets.PACKAGIST_TOKEN }}" \
+          -H "Content-Type: application/json")
         
         HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
         BODY=$(echo "$RESPONSE" | sed '$d')
@@ -82,19 +81,16 @@ jobs:
         echo "HTTP Status: $HTTP_CODE"
         echo "Response: $BODY"
         
-        # Packagist returns 202 (Accepted) for successful update requests
-        if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 202 ]; then
-          if echo "$BODY" | grep -q '"status":"success"'; then
-            echo "✅ Packagist updated successfully"
-            if echo "$BODY" | grep -q '"jobs"'; then
-              echo "📦 Update job queued and will be processed shortly"
-            fi
-          else
-            echo "⚠️  Unexpected response format: $BODY"
+        # Private Packagist returns 202 (Accepted) for successful update requests
+        if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 202 ] || [ "$HTTP_CODE" -eq 204 ]; then
+          echo "✅ Private Packagist updated successfully"
+          if echo "$BODY" | grep -q '"jobs"'; then
+            echo "📦 Update job queued and will be processed shortly"
           fi
         else
-          echo "❌ Packagist update failed with HTTP $HTTP_CODE"
-          echo "Please check your PACKAGIST_USERNAME and PACKAGIST_TOKEN secrets"
+          echo "❌ Private Packagist update failed with HTTP $HTTP_CODE"
+          echo "Response: $BODY"
+          echo "Please check your PACKAGIST_TOKEN secret"
           exit 1
         fi
 
@@ -108,12 +104,15 @@ jobs:
           ## PHP Package Release v${{ steps.version_check.outputs.version }}
           
           ### 📦 Installation
+          
+          **From Private Packagist:**
           ```bash
-          composer require hachi64/hachi64:${{ steps.version_check.outputs.version }}
+          composer config repositories.fengb3 composer https://packagist.com/orgs/fengb3/packages/
+          composer require fengb3/hachi64:${{ steps.version_check.outputs.version }}
           ```
           
           ### 🔗 Links
-          - [Packagist Package](https://packagist.org/packages/hachi64/hachi64#${{ steps.version_check.outputs.version }})
+          - [Private Packagist Package](https://packagist.com/orgs/fengb3/packages/4583316)
           - [Documentation](https://github.com/${{ github.repository }}/tree/main/php)
           
           ### 📋 Changes
