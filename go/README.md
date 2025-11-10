@@ -79,6 +79,10 @@ fmt.Println(string(decoded)) // 输出: Hello
 
 哈吉米64字符集常量，包含64个中文字符。
 
+### `Version`
+
+包版本号常量，表示当前 hachi64 包的版本。
+
 ## 编码示例
 
 以下是一些使用哈吉米64编码的示例：
@@ -114,6 +118,10 @@ go test -bench=.
 - ✅ 与其他语言实现兼容
 - ✅ 完整的单元测试覆盖
 - ✅ 清晰的错误处理
+
+## 发布
+
+查看 [PUBLISHING.md](PUBLISHING.md) 了解如何将此包发布到 pkg.go.dev。
 
 ## 许可证
 
