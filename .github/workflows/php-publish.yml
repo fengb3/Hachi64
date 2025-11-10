@@ -58,7 +58,10 @@ jobs:
     - name: Validate composer.json
       if: steps.version_check.outputs.version_changed == 'true'
       working-directory: ./php
-      run: composer validate --strict
+      run: |
+        # Use composer validate without --strict to allow version field in monorepo
+        # The version field is needed for CICD in this monorepo setup
+        composer validate
 
     - name: Trigger Packagist update
       if: steps.version_check.outputs.version_changed == 'true'
