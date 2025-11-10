@@ -1,0 +1,94 @@
+name: PHP Main CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'php/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/php-test.yml
+    permissions:
+      contents: read
+
+  publish:
+    name: Build and publish PHP package to Packagist
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if composer.json was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "php/composer.json"; then
+          echo "Version file was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from composer.json
+          VERSION=$(grep -oP '"version":\s*"\K[^"]+' php/composer.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "Version file was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Setup PHP
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Install Dependencies
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./php
+      run: composer install --prefer-dist --no-progress
+
+    - name: Validate composer.json
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./php
+      run: composer validate --strict
+
+    - name: Trigger Packagist update
+      if: steps.version_check.outputs.version_changed == 'true'
+      run: |
+        # Trigger Packagist to update the package from GitHub
+        # This will pull the latest tag and update package information
+        curl -XPOST -H "Content-Type: application/json" \
+          "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}"
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: php-v${{ steps.version_check.outputs.version }}
+        name: PHP v${{ steps.version_check.outputs.version }}
+        body: |
+          ## PHP Package Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 Installation
+          ```bash
+          composer require hachi64/hachi64:${{ steps.version_check.outputs.version }}
+          ```
+          
+          ### 🔗 Links
+          - [Packagist Package](https://packagist.org/packages/hachi64/hachi64#${{ steps.version_check.outputs.version }})
+          - [Documentation](https://github.com/${{ github.repository }}/tree/main/php)
+          
+          ### 📋 Changes
+          This release includes updates to the PHP package.
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,106 @@
+name: JavaScript/TypeScript npm Publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'js/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/js-ts-test.yml
+    permissions:
+      contents: read
+
+  publish:
+    name: Build and publish to npm
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if package.json was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "js/package.json"; then
+          echo "package.json was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from package.json
+          VERSION=$(node -p "require('./js/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "package.json was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Set up Node.js
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install dependencies
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./js
+      run: npm install
+
+    - name: Build package
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./js
+      run: npm run build
+
+    - name: Publish to npm
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./js
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: js-v${{ steps.version_check.outputs.version }}
+        name: JavaScript/TypeScript v${{ steps.version_check.outputs.version }}
+        body: |
+          ## JavaScript/TypeScript Package Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 安装 / Installation
+          ```bash
+          npm install hachi64@${{ steps.version_check.outputs.version }}
+          ```
+          
+          或在 `package.json` 中添加：
+          ```json
+          {
+            "dependencies": {
+              "hachi64": "${{ steps.version_check.outputs.version }}"
+            }
+          }
+          ```
+          
+          ### 🔗 链接 / Links
+          - [npm Package](https://www.npmjs.com/package/hachi64/v/${{ steps.version_check.outputs.version }})
+          - [文档 / Documentation](https://github.com/${{ github.repository }}/tree/main/js)
+          
+          ### 📋 变更 / Changes
+          此版本包含 JavaScript/TypeScript 包的更新。
+          This release includes updates to the JavaScript/TypeScript package.
+        files: |
+          js/dist/*
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
