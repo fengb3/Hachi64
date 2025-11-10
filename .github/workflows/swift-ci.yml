@@ -1,0 +1,90 @@
+name: Swift Package CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'swift/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/swift-test.yml
+    permissions:
+      contents: read
+
+  publish:
+    name: Create GitHub Release for Swift Package
+    runs-on: macos-latest
+    needs: test
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for version comparison
+
+    - name: Check if version was updated
+      id: version_check
+      run: |
+        # Check if VERSION file was modified in this commit
+        if git diff HEAD^ HEAD --name-only | grep -q "swift/VERSION"; then
+          echo "VERSION file was modified"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+          
+          # Extract version from VERSION file
+          VERSION=$(cat swift/VERSION | tr -d '[:space:]')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+        else
+          echo "VERSION file was not modified"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Verify Swift Package
+      if: steps.version_check.outputs.version_changed == 'true'
+      working-directory: ./swift
+      run: |
+        swift build
+        swift test
+
+    - name: Create GitHub Release
+      if: steps.version_check.outputs.version_changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: swift-v${{ steps.version_check.outputs.version }}
+        name: Swift v${{ steps.version_check.outputs.version }}
+        body: |
+          ## Swift Package Release v${{ steps.version_check.outputs.version }}
+          
+          ### 📦 Installation
+          
+          Add the following to your `Package.swift`:
+          
+          ```swift
+          dependencies: [
+              .package(url: "https://github.com/${{ github.repository }}.git", from: "${{ steps.version_check.outputs.version }}")
+          ]
+          ```
+          
+          Then add "Hachi64" to your target dependencies:
+          
+          ```swift
+          .target(
+              name: "YourTarget",
+              dependencies: ["Hachi64"]),
+          ```
+          
+          ### 🔗 Links
+          - [Swift Package Documentation](https://github.com/${{ github.repository }}/tree/main/swift)
+          - [Package.swift](https://github.com/${{ github.repository }}/blob/main/swift/Package.swift)
+          
+          ### 📋 Changes
+          This release includes updates to the Swift package.
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
