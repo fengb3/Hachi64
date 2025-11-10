@@ -5,6 +5,7 @@
     "version": "0.1.3",
     "keywords": ["hachi64", "encoding", "base64", "chinese"],
     "license": "MIT",
+    "readme": "README.md",
     "authors": [
         {
             "name": "fengb3"
