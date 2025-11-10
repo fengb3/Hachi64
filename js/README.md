@@ -13,16 +13,20 @@ This is the JavaScript/TypeScript implementation of the Hachi64 custom Base64 en
 
 ## Installation
 
-### From npm (Recommended - Once Published)
-
-**Status:** 📦 Package name `hachi64` is available on npm but not yet published.
-
-**To publish:** Repository maintainer needs to configure `NPM_TOKEN` in GitHub Secrets. See [NPM_SETUP.md](./NPM_SETUP.md) for instructions.
-
-Once published, install with:
+### From npm
 
 ```bash
-npm install hachi64
+npm install hachi64@0.1.2
+```
+
+Or in your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "hachi64": "0.1.2"
+  }
+}
 ```
 
 ### Temporary: Install from source

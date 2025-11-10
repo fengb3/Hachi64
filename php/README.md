@@ -4,32 +4,18 @@
 
 ## 安装
 
-### 从 Private Packagist 安装
-
-此包发布在 Private Packagist 上。首先配置 Composer 仓库：
+### 从 Packagist 安装
 
 ```bash
-composer config repositories.fengb3 composer https://packagist.com/orgs/fengb3/packages/
-```
-
-然后安装包：
-
-```bash
-composer require fengb3/hachi64
+composer require hachi64/hachi64:0.1.2
 ```
 
 或在你的 `composer.json` 中添加：
 
 ```json
 {
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packagist.com/orgs/fengb3/packages/"
-        }
-    ],
     "require": {
-        "fengb3/hachi64": "^0.1"
+        "hachi64/hachi64": "0.1.2"
     }
 }
 ```

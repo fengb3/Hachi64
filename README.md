@@ -22,18 +22,188 @@
 
 ## 多语言支持
 
-- [python](./python/README.md)
-- [rust](./rust/README.md)
-- [csharp](./csharp/README.md)
-- [java](./java/README.md)
-- [go](./go/README.md)
-- [javascript/typescript](./js/README.md)
-- [kotlin](./kotlin/README.md)
-- [php](./php/README.md)
-- [cpp](./cpp/README.md)
-- [swift](./swift/README.md)
-- [ruby](./ruby/README.md)
-- [dart](./dart/README.md)
+### C++
+![Header-only](https://img.shields.io/badge/library-header--only-blue)
+
+```bash
+# Header-only 库，只需包含头文件
+#include "hachi64/hachi64.hpp"
+```
+```cpp
+std::string encoded = hachi64::encode({72, 101, 108, 108, 111});  // "豆米啊拢嘎米多="
+std::vector<uint8_t> decoded = hachi64::decode(encoded);          // "Hello"
+```
+[📖 详细文档](./cpp/README.md)
+
+---
+
+### C# (.NET)
+![NuGet](https://img.shields.io/nuget/v/Hachi64?label=NuGet&color=blue)
+
+```bash
+dotnet add package Hachi64 --version 0.1.0
+```
+```csharp
+byte[] data = Encoding.UTF8.GetBytes("Hello");
+string encoded = Hachi64.Encode(data);           // "豆米啊拢嘎米多="
+byte[] decoded = Hachi64.Decode(encoded);        // "Hello"
+```
+[📖 详细文档](./csharp/README.md)
+
+---
+
+### Dart
+![Pub Version](https://img.shields.io/pub/v/hachi64?label=pub.dev&color=blue)
+
+```yaml
+dependencies:
+  hachi64: ^0.1.1
+```
+```dart
+final encoded = Hachi64.encode(Uint8List.fromList(utf8.encode('Hello')));  // "豆米啊拢嘎米多="
+final decoded = Hachi64.decode(encoded);                                   // "Hello"
+```
+[📖 详细文档](./dart/README.md)
+
+---
+
+### Go
+![Go Version](https://img.shields.io/github/go-mod/go-version/fengb3/Hachi64?filename=go%2Fgo.mod&label=Go)
+![Go Module](https://img.shields.io/badge/go%20module-v0.1.1-blue)
+
+```bash
+go get github.com/fengb3/Hachi64/go@v0.1.1
+```
+```go
+encoded := hachi64.Encode([]byte("Hello"), true)    // "豆米啊拢嘎米多="
+decoded, _ := hachi64.Decode(encoded, true)         // "Hello"
+```
+[📖 详细文档](./go/README.md)
+
+---
+
+### Java
+![Maven Central](https://img.shields.io/maven-central/v/io.github.fengb3/hachi64?label=Maven%20Central&color=blue)
+
+```xml
+<dependency>
+    <groupId>io.github.fengb3</groupId>
+    <artifactId>hachi64</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+```java
+String encoded = Hachi64.encode("Hello".getBytes(StandardCharsets.UTF_8));  // "豆米啊拢嘎米多="
+byte[] decoded = Hachi64.decode(encoded);                                   // "Hello"
+```
+[📖 详细文档](./java/README.md)
+
+---
+
+### JavaScript/TypeScript
+![npm](https://img.shields.io/npm/v/hachi64?label=npm&color=blue)
+
+```bash
+npm install hachi64@0.1.2
+```
+```typescript
+import { encode, decode } from 'hachi64';
+const encoded = encode(Buffer.from('Hello'));  // "豆米啊拢嘎米多="
+const decoded = decode(encoded);               // "Hello"
+```
+[📖 详细文档](./js/README.md)
+
+---
+
+### Kotlin
+![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin-Multiplatform-blue)
+![Status](https://img.shields.io/badge/status-source%20only-orange)
+
+```kotlin
+// 从源码构建或使用 mavenLocal
+implementation("com.hachi64:hachi64:1.0.0")
+```
+```kotlin
+val encoded = Hachi64.encode("Hello".encodeToByteArray())  // "豆米啊拢嘎米多="
+val decoded = Hachi64.decode(encoded).decodeToString()     // "Hello"
+```
+[📖 详细文档](./kotlin/README.md)
+
+---
+
+### PHP
+![Packagist Version](https://img.shields.io/packagist/v/hachi64/hachi64?label=Packagist&color=blue)
+
+```bash
+composer require hachi64/hachi64:0.1.2
+```
+```php
+$encoded = Hachi64::encode("Hello");  // "豆米啊拢嘎米多="
+$decoded = Hachi64::decode($encoded); // "Hello"
+```
+[📖 详细文档](./php/README.md)
+
+---
+
+### Python
+![PyPI](https://img.shields.io/pypi/v/hachi64?label=PyPI&color=blue)
+
+```bash
+pip install hachi64
+```
+```python
+from hachi64 import hachi64
+encoded = hachi64.encode(b"Hello")  # "豆米啊拢嘎米多="
+decoded = hachi64.decode(encoded)   # b"Hello"
+```
+[📖 详细文档](./python/README.md)
+
+---
+
+### Ruby
+![Gem Version](https://img.shields.io/gem/v/hachi64?label=RubyGems&color=blue)
+
+```bash
+gem install hachi64
+```
+```ruby
+encoded = Hachi64.encode("Hello")  # "豆米啊拢嘎米多="
+decoded = Hachi64.decode(encoded)  # "Hello"
+```
+[📖 详细文档](./ruby/README.md)
+
+---
+
+### Rust
+![Crates.io](https://img.shields.io/crates/v/hachi64?label=crates.io&color=blue)
+
+```toml
+[dependencies]
+hachi64 = "0.1.6"
+```
+```rust
+use hachi64::{encode, decode};
+let encoded = encode(b"Hello");       // "豆米啊拢嘎米多="
+let decoded = decode(&encoded)?;      // b"Hello"
+```
+[📖 详细文档](./rust/README.md)
+
+---
+
+### Swift
+![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-blue)
+![Version](https://img.shields.io/badge/version-0.1.1-blue)
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/fengb3/Hachi64.git", from: "0.1.1")
+]
+```
+```swift
+let encoded = Hachi64.encode("Hello".data(using: .utf8)!)  // "豆米啊拢嘎米多="
+let decoded = try Hachi64.decode(encoded)                  // "Hello"
+```
+[📖 详细文档](./swift/README.md)
 
 ## License
 

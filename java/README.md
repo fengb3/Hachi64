@@ -17,7 +17,7 @@ Java 实现的哈吉米64编解码器，使用64个中文字符进行 Base64 风
 
 ```xml
 <dependency>
-    <groupId>com.hachi64</groupId>
+    <groupId>io.github.fengb3</groupId>
     <artifactId>hachi64</artifactId>
     <version>0.1.0</version>
 </dependency>
@@ -26,7 +26,7 @@ Java 实现的哈吉米64编解码器，使用64个中文字符进行 Base64 风
 或在 Gradle 项目中：
 
 ```groovy
-implementation 'com.hachi64:hachi64:0.1.0'
+implementation 'io.github.fengb3:hachi64:0.1.0'
 ```
 
 ### 从源码构建
