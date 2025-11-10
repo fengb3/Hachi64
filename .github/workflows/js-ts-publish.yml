@@ -1,4 +1,4 @@
-name: JavaScript/TypeScript npm Publish
+name: JavaScript/TypeScript Main CI
 
 on:
   push:

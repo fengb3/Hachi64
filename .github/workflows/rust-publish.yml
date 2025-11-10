@@ -1,4 +1,4 @@
-name: Rust Publish to Crates.io
+name: Rust Main CI
 
 on:
   push:

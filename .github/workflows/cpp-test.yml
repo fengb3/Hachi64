@@ -1,4 +1,4 @@
-name: C++ CI
+name: C++ Unit Test
 
 on:
   push:
@@ -12,6 +12,7 @@ on:
       - 'cpp/**'
       - '.github/workflows/cpp/**'
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   build:

@@ -1,17 +1,18 @@
-name: Dart CI
+name: Dart Unit Test
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'dart/**'
-      - '.github/workflows/dart/**'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'dart/**'
-      - '.github/workflows/dart/**'
+  # push:
+  #   branches: [ main ]
+  #   paths:
+  #     - 'dart/**'
+  #     - '.github/workflows/dart/**'
+  # pull_request:
+  #   branches: [ main ]
+  #   paths:
+  #     - 'dart/**'
+  #     - '.github/workflows/dart/**'
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   build:

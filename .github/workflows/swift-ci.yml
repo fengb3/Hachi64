@@ -1,4 +1,4 @@
-name: Swift Package CI
+name: Swift Main CI
 
 on:
   push:

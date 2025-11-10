@@ -1,17 +1,19 @@
-name: Swift CI
+name: Swift Unit Test
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'swift/**'
-      - '.github/workflows/swift/**'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'swift/**'
-      - '.github/workflows/swift/**'
+  # push:
+  #   branches: [ main ]
+  #   paths:
+  #     - 'swift/**'
+  #     - '.github/workflows/swift/**'
+  # pull_request:
+  #   branches: [ main ]
+  #   paths:
+  #     - 'swift/**'
+  #     - '.github/workflows/swift/**'
   workflow_call:
+  workflow_dispatch:
+
 
 jobs:
   build:

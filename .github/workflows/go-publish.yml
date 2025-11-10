@@ -1,4 +1,4 @@
-name: Go Publish to pkg.go.dev
+name: Go Main CI
 
 on:
   push:
