@@ -4,12 +4,30 @@
 
 ## 安装
 
+### 从 RubyGems 安装
+
+```bash
+gem install hachi64
+```
+
+或在 Gemfile 中添加：
+
+```ruby
+gem 'hachi64', '~> 0.1.1'
+```
+
+然后运行：
+
+```bash
+bundle install
+```
+
 ### 从源码安装
 
 ```bash
 cd ruby
 gem build hachi64.gemspec
-gem install hachi64-0.1.0.gem
+gem install hachi64-0.1.1.gem
 ```
 
 ### 在项目中使用

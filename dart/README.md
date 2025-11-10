@@ -20,19 +20,11 @@ Dart 实现的哈吉米64编解码器，使用64个中文字符进行 Base64 风
 
 ### 安装
 
-在你的 `pubspec.yaml` 文件中添加依赖：
+从 pub.dev 安装：
 
 ```yaml
 dependencies:
-  hachi64:
-    path: ../dart  # 如果使用本地路径
-```
-
-或者从 pub.dev 安装（待发布）：
-
-```yaml
-dependencies:
-  hachi64: ^1.0.0
+  hachi64: ^0.1.1
 ```
 
 然后运行：

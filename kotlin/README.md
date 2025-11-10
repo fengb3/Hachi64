@@ -12,17 +12,41 @@ Kotlin Multiplatform 实现的哈吉米64编解码器，使用64个中文字符�
 
 ## 快速开始
 
-### 环境要求
+**注意：** 此库尚未发布到 Maven Central 或其他公共仓库。要使用它：
 
-- JDK 8 或更高版本
-- Gradle 8.0 或更高版本
-
-### 构建项目
+### 选项 1: 从源码构建
 
 ```bash
 cd kotlin
 gradle build
+gradle publishToMavenLocal
 ```
+
+然后在你的项目中添加 mavenLocal() 仓库并引用：
+
+```kotlin
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.hachi64:hachi64:1.0.0")
+}
+```
+
+### 选项 2: 作为子项目包含
+
+在你的 settings.gradle.kts 中：
+
+```kotlin
+includeBuild("../path/to/Hachi64/kotlin")
+```
+
+### 环境要求
+
+- JDK 8 或更高版本
+- Gradle 8.0 或更高版本
 
 ### 运行测试
 

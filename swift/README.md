@@ -23,7 +23,7 @@ Swift 实现的哈吉米64(Hachi64)编解码器，使用64个中文字符进行 
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/fengb3/Hachi64.git", from: "0.1.0")
+    .package(url: "https://github.com/fengb3/Hachi64.git", from: "0.1.1")
 ]
 ```
 
@@ -43,7 +43,7 @@ dependencies: [
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/fengb3/Hachi64.git", .exact("swift-v0.1.0"))
+    .package(url: "https://github.com/fengb3/Hachi64.git", .exact("swift-v0.1.1"))
 ]
 ```
 
@@ -54,7 +54,7 @@ dependencies: [
 1. 在 Xcode 中打开你的项目
 2. 选择 **File** > **Add Package Dependencies...**
 3. 在搜索框中输入：`https://github.com/fengb3/Hachi64.git`
-4. 选择版本规则（推荐使用标签 `swift-v0.1.0` 或更高版本）
+4. 选择版本规则（推荐使用标签 `swift-v0.1.1` 或更高版本）
 5. 点击 **Add Package**
 
 ## 使用方法

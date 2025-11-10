@@ -9,14 +9,27 @@ Java 实现的哈吉米64编解码器，使用64个中文字符进行 Base64 风
 - 支持带填充和不带填充的编码模式
 - 兼容标准 Base64 的编码原理
 
-## 快速开始
+## 安装
 
-### 环境要求
+### 从 Maven Central 安装
 
-- Java 8 或更高版本
-- Maven 3.6 或更高版本
+在你的 `pom.xml` 中添加依赖：
 
-### 构建项目
+```xml
+<dependency>
+    <groupId>com.hachi64</groupId>
+    <artifactId>hachi64</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+
+或在 Gradle 项目中：
+
+```groovy
+implementation 'com.hachi64:hachi64:0.1.0'
+```
+
+### 从源码构建
 
 ```bash
 cd java
@@ -28,6 +41,13 @@ mvn clean install
 ```bash
 mvn test
 ```
+
+## 快速开始
+
+### 环境要求
+
+- Java 8 或更高版本
+- Maven 3.6 或更高版本
 
 ## 使用方法
 

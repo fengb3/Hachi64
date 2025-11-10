@@ -11,9 +11,21 @@
 - 类型安全，性能优异
 - 支持 .NET 8.0+
 
-## 快速开始
+## 安装
 
-### 构建项目
+### 从 NuGet 安装
+
+```bash
+dotnet add package Hachi64 --version 0.1.0
+```
+
+或在项目的 `.csproj` 文件中添加：
+
+```xml
+<PackageReference Include="Hachi64" Version="0.1.0" />
+```
+
+### 从源码构建
 
 ```bash
 cd csharp/Hachi64
@@ -26,6 +38,8 @@ dotnet build
 cd csharp/Hachi64.Tests
 dotnet test
 ```
+
+## 快速开始
 
 ### 基本用法
 

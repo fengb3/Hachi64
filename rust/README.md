@@ -16,7 +16,13 @@
 
 ```toml
 [dependencies]
-hachi64 = "0.1.0"
+hachi64 = "0.1.6"
+```
+
+或使用 cargo 命令：
+
+```bash
+cargo add hachi64
 ```
 
 ### 基本用法

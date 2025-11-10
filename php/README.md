@@ -4,15 +4,41 @@
 
 ## 安装
 
-### 使用 Composer
+**注意：** 此包尚未发布到 Packagist。要使用它，可以：
+
+### 选项 1: 手动安装
+
+将 `src/Hachi64.php` 文件复制到你的项目中，并使用 `require` 或 `include` 引入：
+
+```php
+require_once 'path/to/Hachi64.php';
+```
+
+### 选项 2: 使用 Composer 本地路径
+
+在你的 `composer.json` 中添加：
+
+```json
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../path/to/Hachi64/php"
+        }
+    ],
+    "require": {
+        "hachi64/hachi64": "*"
+    }
+}
+```
+
+### 未来：Packagist 安装（计划中）
+
+一旦发布到 Packagist，你将能够使用以下命令安装：
 
 ```bash
 composer require hachi64/hachi64
 ```
-
-### 手动安装
-
-将 `src/Hachi64.php` 文件复制到你的项目中，并使用 `require` 或 `include` 引入。
 
 ## 使用方法
 
