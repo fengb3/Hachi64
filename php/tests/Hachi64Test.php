@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Hachi64\Hachi64;
 
 /**
- * 哈吉米64 编解码器测试类
+ * 哈基米64 编解码器测试类
  */
 class Hachi64Test extends TestCase
 {

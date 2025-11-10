@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hachi64/hachi64.dart';
 
 void main() {
-  print('=== 哈吉米64 (Hachi64) 示例 ===\n');
+  print('=== 哈基米64 (Hachi64) 示例 ===\n');
 
   // 示例 1: 基本编码和解码
   print('示例 1: 基本编码和解码');

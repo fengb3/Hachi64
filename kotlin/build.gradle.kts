@@ -67,7 +67,7 @@ publishing {
     publications.withType<MavenPublication> {
         pom {
             name.set("Hachi64")
-            description.set("哈吉米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码")
+            description.set("哈基米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码")
             url.set("https://github.com/fengb3/Hachi64")
             
             licenses {

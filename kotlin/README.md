@@ -1,10 +1,10 @@
-# 哈吉米64 (Hachi64) - Kotlin 多平台实现
+# 哈基米64 (Hachi64) - Kotlin 多平台实现
 
-Kotlin Multiplatform 实现的哈吉米64编解码器，使用64个中文字符进行 Base64 风格的编码和解码。支持 JVM、JavaScript 和 Native 平台。
+Kotlin Multiplatform 实现的哈基米64编解码器，使用64个中文字符进行 Base64 风格的编码和解码。支持 JVM、JavaScript 和 Native 平台。
 
 ## 功能特性
 
-- 使用64个中文字符（哈吉米字符集）进行编码
+- 使用64个中文字符（哈基米字符集）进行编码
 - 完全可逆的编码解码过程
 - 支持带填充和不带填充的编码模式
 - 兼容标准 Base64 的编码原理
@@ -106,11 +106,11 @@ val decoded = Hachi64.decode(encodedNoPad, false)
 
 #### 常量
 
-- `const val HACHI_ALPHABET: String` - 哈吉米64字符集（64个中文字符）
+- `const val HACHI_ALPHABET: String` - 哈基米64字符集（64个中文字符）
 
 ## 字符集说明
 
-哈吉米64使用以下64个中文字符：
+哈基米64使用以下64个中文字符：
 
 ```
 哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济

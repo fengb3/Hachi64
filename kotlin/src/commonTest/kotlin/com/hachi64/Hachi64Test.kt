@@ -3,7 +3,7 @@ package com.hachi64
 import kotlin.test.*
 
 /**
- * 哈吉米64 编解码器测试类
+ * 哈基米64 编解码器测试类
  */
 class Hachi64Test {
 

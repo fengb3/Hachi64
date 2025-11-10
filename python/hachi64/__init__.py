@@ -1,5 +1,5 @@
 """
-Hachi64: 哈吉米64 Encoding and Decoding
+Hachi64: 哈基米64 Encoding and Decoding
 """
 
 # HACHI_ALPHABET="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"

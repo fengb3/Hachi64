@@ -1,6 +1,6 @@
 # Hachi64 Ruby Implementation
 
-哈吉米64 编解码器的 Ruby 实现 - 使用64个中文字符进行 Base64 风格的编码和解码。
+哈基米64 编解码器的 Ruby 实现 - 使用64个中文字符进行 Base64 风格的编码和解码。
 
 ## 安装
 
@@ -91,7 +91,7 @@ puts binary_data == decoded # 输出: true
 
 ### `Hachi64.encode(data, padding: true)`
 
-将字节字符串编码为哈吉米64字符串。
+将字节字符串编码为哈基米64字符串。
 
 **参数:**
 - `data` (String): 要编码的数据（二进制字符串）
@@ -108,7 +108,7 @@ Hachi64.encode("Hello", padding: false)  # => "豆米啊拢嘎米多"
 
 ### `Hachi64.decode(encoded_str, padding: true)`
 
-将哈吉米64字符串解码为字节字符串。
+将哈基米64字符串解码为字节字符串。
 
 **参数:**
 - `encoded_str` (String): 要解码的字符串
@@ -128,7 +128,7 @@ Hachi64.decode("豆米啊拢嘎米多", padding: false)  # => "Hello"
 
 ### `Hachi64::HACHI_ALPHABET`
 
-哈吉米64字符集常量，包含64个中文字符。
+哈基米64字符集常量，包含64个中文字符。
 
 ```ruby
 puts Hachi64::HACHI_ALPHABET
@@ -137,7 +137,7 @@ puts Hachi64::HACHI_ALPHABET
 
 ## 编码示例
 
-以下是一些使用哈吉米64编码的示例：
+以下是一些使用哈基米64编码的示例：
 
 | 原始数据 | 编码结果 |
 |---------|---------|

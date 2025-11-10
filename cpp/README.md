@@ -1,6 +1,6 @@
 # Hachi64 C++ 实现
 
-哈吉米64 (Hachi64) 的 C++ 头文件库实现，使用64个中文字符进行 Base64 风格的编码和解码。
+哈基米64 (Hachi64) 的 C++ 头文件库实现，使用64个中文字符进行 Base64 风格的编码和解码。
 
 ## 特性
 
@@ -97,7 +97,7 @@ ctest --output-on-failure
 std::string encode(const std::vector<uint8_t>& data, bool padding = true);
 ```
 
-将字节数据编码为哈吉米64字符串。
+将字节数据编码为哈基米64字符串。
 
 - **参数**：
   - `data`: 要编码的字节数据
@@ -110,7 +110,7 @@ std::string encode(const std::vector<uint8_t>& data, bool padding = true);
 std::vector<uint8_t> decode(const std::string& encoded_str, bool padding = true);
 ```
 
-将哈吉米64字符串解码为字节数据。
+将哈基米64字符串解码为字节数据。
 
 - **参数**：
   - `encoded_str`: 要解码的字符串
@@ -124,7 +124,7 @@ std::vector<uint8_t> decode(const std::string& encoded_str, bool padding = true)
 constexpr const char* HACHI_ALPHABET;
 ```
 
-哈吉米64使用的64个中文字符集。
+哈基米64使用的64个中文字符集。
 
 ## 编码示例
 

@@ -10,7 +10,7 @@
     <Version>0.1.0</Version>
     <Authors>fengb3</Authors>
     <Company>fengb3</Company>
-    <Description>哈吉米64编解码器 - 使用64个中文字符的 Base64 风格编码库</Description>
+    <Description>哈基米64编解码器 - 使用64个中文字符的 Base64 风格编码库</Description>
     <PackageTags>encoding;base64;chinese;hachi64;encoder;decoder</PackageTags>
     <PackageProjectUrl>https://github.com/fengb3/Hachi64</PackageProjectUrl>
     <RepositoryUrl>https://github.com/fengb3/Hachi64</RepositoryUrl>

@@ -2,7 +2,7 @@
  * @file hachi64.hpp
  * @brief Hachi64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码
  * 
- * 哈吉米64使用64个中文字符，这些字符按发音相似性分组，使编码后的字符串看起来更加和谐统一。
+ * 哈基米64使用64个中文字符，这些字符按发音相似性分组，使编码后的字符串看起来更加和谐统一。
  */
 
 #ifndef HACHI64_HPP
@@ -16,11 +16,11 @@
 
 namespace hachi64 {
 
-/// 哈吉米64字符集：64个中文字符，按同音字分组
+/// 哈基米64字符集：64个中文字符，按同音字分组
 constexpr const char* HACHI_ALPHABET = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济";
 
 /**
- * @brief 哈吉米64编解码过程中可能发生的异常
+ * @brief 哈基米64编解码过程中可能发生的异常
  */
 class HachiError : public std::runtime_error {
 public:
@@ -83,7 +83,7 @@ namespace detail {
 }
 
 /**
- * @brief 使用哈吉米64字符集编码数据
+ * @brief 使用哈基米64字符集编码数据
  * 
  * @param data 要编码的字节数据
  * @param padding 是否使用'='进行填充（默认为true）
@@ -136,12 +136,12 @@ inline std::string encode(const std::vector<uint8_t>& data, bool padding = true)
 }
 
 /**
- * @brief 使用哈吉米64字符集解码字符串
+ * @brief 使用哈基米64字符集解码字符串
  * 
  * @param encoded_str 要解码的字符串
  * @param padding 输入字符串是否使用'='填充（默认为true）
  * @return 解码后的字节数据
- * @throws HachiError 当输入字符串包含不在哈吉米64字符集中的字符时抛出
+ * @throws HachiError 当输入字符串包含不在哈基米64字符集中的字符时抛出
  * 
  * @example
  * ```cpp

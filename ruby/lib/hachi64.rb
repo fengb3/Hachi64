@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Hachi64: 哈吉米64 Encoding and Decoding
+# Hachi64: 哈基米64 Encoding and Decoding
 # This module provides encoding and decoding using the Hachi64 character set.
 
 module Hachi64

@@ -5,12 +5,12 @@ using System.Text;
 namespace Hachi64
 {
     /// <summary>
-    /// 哈吉米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码
+    /// 哈基米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码
     /// </summary>
     public class Hachi64
     {
         /// <summary>
-        /// 哈吉米64字符集：64个中文字符，按同音字分组
+        /// 哈基米64字符集：64个中文字符，按同音字分组
         /// </summary>
         public const string HachiAlphabet = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济";
 
@@ -28,7 +28,7 @@ namespace Hachi64
         private static Dictionary<char, int> ReverseMap => _reverseMap.Value;
 
         /// <summary>
-        /// 使用哈吉米64字符集编码字节数组
+        /// 使用哈基米64字符集编码字节数组
         /// </summary>
         /// <param name="data">要编码的字节数组</param>
         /// <param name="padding">是否使用 '=' 进行填充（默认为 true）</param>
@@ -87,7 +87,7 @@ namespace Hachi64
         }
 
         /// <summary>
-        /// 解码使用哈吉米64字符集编码的字符串
+        /// 解码使用哈基米64字符集编码的字符串
         /// </summary>
         /// <param name="encodedStr">要解码的字符串</param>
         /// <param name="padding">输入字符串是否使用 '=' 进行填充（默认为 true）</param>

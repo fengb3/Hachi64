@@ -1,10 +1,10 @@
 # Hachi64 C# (.NET) 实现
 
-哈吉米64编解码器的 C# (.NET) 实现，使用64个中文字符进行 Base64 风格的编码和解码。
+哈基米64编解码器的 C# (.NET) 实现，使用64个中文字符进行 Base64 风格的编码和解码。
 
 ## 特性
 
-- 使用固定的哈吉米64字符集（64个中文字符）
+- 使用固定的哈基米64字符集（64个中文字符）
 - 支持带填充和不带填充两种模式
 - 提供静态方法调用方式
 - 完全符合 Base64 编码标准
@@ -97,11 +97,11 @@ byte[] decoded = Hachi64.Decode(encoded, padding: false);
 
 #### `Hachi64`
 
-哈吉米64编码器/解码器。
+哈基米64编码器/解码器。
 
 **常量:**
 
-- `HachiAlphabet` - 哈吉米64字符集字符串（64个中文字符）
+- `HachiAlphabet` - 哈基米64字符集字符串（64个中文字符）
 
 **静态方法:**
 
@@ -162,7 +162,7 @@ csharp/
      <PackageId>Hachi64</PackageId>
      <Version>1.0.0</Version>
      <Authors>Your Name</Authors>
-     <Description>哈吉米64编解码器 - 使用64个中文字符的 Base64 风格编码</Description>
+     <Description>哈基米64编解码器 - 使用64个中文字符的 Base64 风格编码</Description>
      <PackageTags>encoding;base64;chinese;hachi64</PackageTags>
    </PropertyGroup>
    ```

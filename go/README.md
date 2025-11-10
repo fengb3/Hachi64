@@ -1,6 +1,6 @@
 # Hachi64 Go Implementation
 
-哈吉米64 编解码器的 Go 实现 - 使用64个中文字符进行 Base64 风格的编码和解码。
+哈基米64 编解码器的 Go 实现 - 使用64个中文字符进行 Base64 风格的编码和解码。
 
 ## 安装
 
@@ -54,7 +54,7 @@ fmt.Println(string(decoded)) // 输出: Hello
 
 ### `Encode(data []byte, padding bool) string`
 
-将字节数组编码为哈吉米64字符串。
+将字节数组编码为哈基米64字符串。
 
 **参数:**
 - `data`: 要编码的字节数组
@@ -65,7 +65,7 @@ fmt.Println(string(decoded)) // 输出: Hello
 
 ### `Decode(encodedStr string, padding bool) ([]byte, error)`
 
-将哈吉米64字符串解码为字节数组。
+将哈基米64字符串解码为字节数组。
 
 **参数:**
 - `encodedStr`: 要解码的字符串
@@ -77,7 +77,7 @@ fmt.Println(string(decoded)) // 输出: Hello
 
 ### `HachiAlphabet`
 
-哈吉米64字符集常量，包含64个中文字符。
+哈基米64字符集常量，包含64个中文字符。
 
 ### `Version`
 
@@ -85,7 +85,7 @@ fmt.Println(string(decoded)) // 输出: Hello
 
 ## 编码示例
 
-以下是一些使用哈吉米64编码的示例：
+以下是一些使用哈基米64编码的示例：
 
 | 原始数据 | 编码结果 |
 |---------|---------|

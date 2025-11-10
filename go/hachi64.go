@@ -1,7 +1,7 @@
 // Package hachi64 provides encoding and decoding functions for Hachi64,
 // a Base64-style encoding using 64 Chinese characters.
 //
-// 哈吉米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码。
+// 哈基米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码。
 package hachi64
 
 import (
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// HachiAlphabet 哈吉米64字符集：64个中文字符，按同音字分组
+// HachiAlphabet 哈基米64字符集：64个中文字符，按同音字分组
 const HachiAlphabet = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济"
 
 // alphabetRunes contains the Hachi alphabet as a slice of runes for indexing

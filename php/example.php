@@ -61,7 +61,7 @@ echo "\n";
 // Example 5: UTF-8 text
 echo "Example 5: UTF-8 text\n";
 echo "---------------------\n";
-$utf8Text = "哈吉米64编码器";
+$utf8Text = "哈基米64编码器";
 $encoded = Hachi64::encode($utf8Text);
 $decoded = Hachi64::decode($encoded);
 echo "Original: {$utf8Text}\n";

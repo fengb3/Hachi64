@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["fengb3"]
   spec.email         = []
 
-  spec.summary       = "哈吉米64 encoding and decoding"
+  spec.summary       = "哈基米64 encoding and decoding"
   spec.description   = "Hachi64 provides encoding and decoding using a custom 64-character Chinese character set, similar to Base64 but with Hachimi-style characters."
   spec.homepage      = "https://github.com/fengb3/Hachi64"
   spec.license       = "MIT"

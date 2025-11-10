@@ -1,14 +1,14 @@
 //! # Hachi64
 //!
-//! 哈吉米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码。
+//! 哈基米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码。
 //!
-//! 本库提供了使用自定义哈吉米64字符集来创建哈吉米64风格编码的工具。
-//! 哈吉米64使用64个中文字符，这些字符按发音相似性分组，使编码后的字符串看起来更加和谐统一。
+//! 本库提供了使用自定义哈基米64字符集来创建哈基米64风格编码的工具。
+//! 哈基米64使用64个中文字符，这些字符按发音相似性分组，使编码后的字符串看起来更加和谐统一。
 
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
-/// 哈吉米64字符集：64个中文字符，按同音字分组
+/// 哈基米64字符集：64个中文字符，按同音字分组
 pub const HACHI_ALPHABET: &str = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济";
 
 /// 用于解码的反向映射表（懒加载单例）
@@ -32,7 +32,7 @@ fn get_reverse_map() -> &'static HashMap<char, u8> {
     })
 }
 
-/// 哈吉米64编解码过程中可能发生的错误
+/// 哈基米64编解码过程中可能发生的错误
 #[derive(Debug, PartialEq, Eq)]
 pub enum HachiError {
     /// 解码输入字符串无效（例如，包含不在字符集中的字符）
@@ -100,7 +100,7 @@ pub fn encode(data: &[u8]) -> String {
 ///
 /// # Errors
 ///
-/// 当输入字符串包含不在哈吉米64字符集中的字符时，返回 [`HachiError::InvalidInput`]。
+/// 当输入字符串包含不在哈基米64字符集中的字符时，返回 [`HachiError::InvalidInput`]。
 pub fn decode(encoded_str: &str) -> Result<Vec<u8>, HachiError> {
     let reverse_map = get_reverse_map();
     let padding = true; // 默认处理填充

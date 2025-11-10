@@ -1,5 +1,5 @@
 /**
- * Hachi64: 哈吉米64 Encoding and Decoding
+ * Hachi64: 哈基米64 Encoding and Decoding
  * 
  * A custom Base64 encoder/decoder using 64 Chinese characters
  */

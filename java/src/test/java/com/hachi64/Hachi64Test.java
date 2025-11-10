@@ -12,7 +12,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 哈吉米64 编解码器测试类
+ * 哈基米64 编解码器测试类
  */
 public class Hachi64Test {
 

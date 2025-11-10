@@ -1,12 +1,12 @@
 import Foundation
 
-/// 哈吉米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码
+/// 哈基米64 编解码器 - 使用64个中文字符进行 Base64 风格的编码和解码
 ///
-/// Hachi64 使用一个独特的64个中文字符集(哈吉米字符集)来进行Base64风格的编码和解码。
+/// Hachi64 使用一个独特的64个中文字符集(哈基米字符集)来进行Base64风格的编码和解码。
 /// 字符按发音相似性分组，使编码后的字符串看起来更加和谐统一。
 public struct Hachi64 {
     
-    /// 哈吉米64字符集：64个中文字符，按同音字分组
+    /// 哈基米64字符集：64个中文字符，按同音字分组
     public static let hachiAlphabet = "哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济"
     
     private static let alphabetArray: [Character] = Array(hachiAlphabet)
@@ -18,7 +18,7 @@ public struct Hachi64 {
         return map
     }()
     
-    /// 使用哈吉米64字符集编码字节数组
+    /// 使用哈基米64字符集编码字节数组
     ///
     /// - Parameters:
     ///   - data: 要编码的数据
@@ -69,7 +69,7 @@ public struct Hachi64 {
         return result
     }
     
-    /// 解码使用哈吉米64字符集编码的字符串
+    /// 解码使用哈基米64字符集编码的字符串
     ///
     /// - Parameters:
     ///   - encodedString: 要解码的字符串
@@ -146,7 +146,7 @@ public struct Hachi64 {
     }
 }
 
-/// 哈吉米64编解码错误类型
+/// 哈基米64编解码错误类型
 public enum Hachi64Error: Error, CustomStringConvertible {
     case invalidCharacter(Character)
     

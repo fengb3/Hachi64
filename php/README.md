@@ -1,6 +1,6 @@
 # Hachi64 - PHP 实现
 
-哈吉米64 (Hachi64) 的 PHP 实现。使用64个中文字符进行 Base64 风格的编码和解码。
+哈基米64 (Hachi64) 的 PHP 实现。使用64个中文字符进行 Base64 风格的编码和解码。
 
 ## 安装
 
@@ -53,14 +53,14 @@ echo "无填充解码: " . $decodedNoPad . "\n";
 
 ### `Hachi64::encode($data, $padding = true)`
 
-将字节数据编码为哈吉米64字符串。
+将字节数据编码为哈基米64字符串。
 
 **参数:**
 - `$data` (string): 要编码的字节数据
 - `$padding` (bool): 是否使用 '=' 进行填充，默认为 `true`
 
 **返回值:**
-- (string): 编码后的哈吉米64字符串
+- (string): 编码后的哈基米64字符串
 
 **异常:**
 - `InvalidArgumentException`: 当 `$data` 为 `null` 时抛出
@@ -73,10 +73,10 @@ $encoded = Hachi64::encode("Hello");
 
 ### `Hachi64::decode($encodedStr, $padding = true)`
 
-将哈吉米64字符串解码为原始字节数据。
+将哈基米64字符串解码为原始字节数据。
 
 **参数:**
-- `$encodedStr` (string): 要解码的哈吉米64字符串
+- `$encodedStr` (string): 要解码的哈基米64字符串
 - `$padding` (bool): 输入字符串是否使用 '=' 进行填充，默认为 `true`
 
 **返回值:**
@@ -93,7 +93,7 @@ $decoded = Hachi64::decode("豆米啊拢嘎米多=");
 
 ## 字符集
 
-哈吉米64使用以下64个中文字符集：
+哈基米64使用以下64个中文字符集：
 
 ```
 哈蛤呵吉急集米咪迷南男难北背杯绿律虑豆斗抖啊阿额西希息嘎咖伽花华哗压鸭呀库酷苦奶乃耐龙隆拢曼慢漫波播玻叮丁订咚东冬囊路陆多都弥济

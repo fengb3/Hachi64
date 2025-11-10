@@ -1,6 +1,6 @@
 # Hachi64 Swift Implementation
 
-Swift 实现的哈吉米64(Hachi64)编解码器，使用64个中文字符进行 Base64 风格的编码和解码。
+Swift 实现的哈基米64(Hachi64)编解码器，使用64个中文字符进行 Base64 风格的编码和解码。
 
 ## 功能特性
 
@@ -123,13 +123,13 @@ do {
 
 #### 静态属性
 
-- `hachiAlphabet: String` - 哈吉米64字符集（64个中文字符）
+- `hachiAlphabet: String` - 哈基米64字符集（64个中文字符）
 
 #### 静态方法
 
 ##### `encode(_:padding:)`
 
-编码数据为哈吉米64字符串。
+编码数据为哈基米64字符串。
 
 ```swift
 static func encode(_ data: Data, padding: Bool = true) -> String
@@ -143,7 +143,7 @@ static func encode(_ data: Data, padding: Bool = true) -> String
 
 ##### `decode(_:padding:)`
 
-解码哈吉米64字符串。
+解码哈基米64字符串。
 
 ```swift
 static func decode(_ encodedString: String, padding: Bool = true) throws -> Data
@@ -163,7 +163,7 @@ static func decode(_ encodedString: String, padding: Bool = true) throws -> Data
 
 #### 错误情况
 
-- `invalidCharacter(Character)` - 输入包含不在哈吉米64字符集中的字符
+- `invalidCharacter(Character)` - 输入包含不在哈基米64字符集中的字符
 
 ## 测试
 
