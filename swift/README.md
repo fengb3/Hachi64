@@ -15,21 +15,47 @@ Swift 实现的哈吉米64(Hachi64)编解码器，使用64个中文字符进行 
 
 ### Swift Package Manager
 
+由于本项目是多语言 monorepo，Swift 包位于 `swift/` 子目录中。有以下几种引用方式：
+
+#### 方式 1：使用带路径的 URL（推荐）
+
 在你的 `Package.swift` 文件中添加依赖：
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/fengb3/Hachi64.git", from: "1.0.0")
+    .package(url: "https://github.com/fengb3/Hachi64.git", from: "0.1.0")
 ]
 ```
+
+**注意**：引用时需要指定完整的模块路径。由于 SPM 会克隆整个仓库，它会自动找到 `swift/Package.swift`。
 
 然后在目标中添加 "Hachi64" 依赖：
 
 ```swift
 .target(
     name: "YourTarget",
-    dependencies: ["Hachi64"]),
+    dependencies: [
+        .product(name: "Hachi64", package: "Hachi64")
+    ]),
 ```
+
+#### 方式 2：使用 Git 标签（更明确）
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/fengb3/Hachi64.git", .exact("swift-v0.1.0"))
+]
+```
+
+使用项目的 Swift 专用标签（格式：`swift-v{version}`），这样可以明确引用 Swift 包的特定版本。
+
+#### 方式 3：在 Xcode 中添加
+
+1. 在 Xcode 中打开你的项目
+2. 选择 **File** > **Add Package Dependencies...**
+3. 在搜索框中输入：`https://github.com/fengb3/Hachi64.git`
+4. 选择版本规则（推荐使用标签 `swift-v0.1.0` 或更高版本）
+5. 点击 **Add Package**
 
 ## 使用方法
 
@@ -173,6 +199,31 @@ swift test
 
 - Swift 5.7 或更高版本
 - macOS 12.0+ / iOS 15.0+ / tvOS 15.0+ / watchOS 8.0+ / Linux
+
+## Monorepo 说明
+
+本项目是一个多语言单仓库（monorepo），Swift 包位于 `swift/` 子目录中。
+
+### SPM 兼容性
+
+- ✅ **Swift Package Manager 会自动识别子目录中的 `Package.swift`**
+- ✅ 引用时使用完整的仓库 URL，SPM 会自动找到正确的包定义
+- ✅ 使用 `swift-v{version}` 格式的 Git 标签来明确 Swift 包版本
+- ✅ 仓库中的其他语言实现不会影响 Swift 包的使用
+
+### 工作原理
+
+当你添加依赖时：
+1. SPM 克隆整个 `Hachi64` 仓库
+2. 自动扫描并找到 `swift/Package.swift`
+3. 解析包定义并构建 Swift 模块
+4. 其他语言的目录（`python/`, `rust/`, `js/` 等）会被忽略
+
+### 版本管理
+
+- Swift 包使用独立的版本标签：`swift-v0.1.0`, `swift-v0.1.1` 等
+- 这样可以独立于其他语言版本进行发布
+- 查看所有 Swift 版本：https://github.com/fengb3/Hachi64/releases?q=swift-v
 
 ## 发布流程
 
