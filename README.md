@@ -25,8 +25,8 @@
 ### C++
 ![Header-only](https://img.shields.io/badge/library-header--only-blue)
 
-```bash
-# Header-only 库，只需包含头文件
+```cpp
+// Header-only 库，只需包含头文件
 #include "hachi64/hachi64.hpp"
 ```
 ```cpp
